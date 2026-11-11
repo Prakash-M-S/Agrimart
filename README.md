@@ -40,3 +40,16 @@ python src/evaluation/train_and_evaluate.py
 python src/evaluation/generate_plots.py
 python src/evaluation/export_pwa_bundle.py
 ```
+
+### Running the Unit & Integration Test Suite (23 Tests)
+```bash
+python -m pytest -v
+```
+- **Unit Tests (`tests/unit/`)**:
+  - [`test_settlement_engine.py`](tests/unit/test_settlement_engine.py) — Equations (2)–(4) midpoint calculation, factor offsets, strict $[P_L, P_U]$ clamping, and Jain's Fairness Index.
+  - [`test_escrow_ledger.py`](tests/unit/test_escrow_ledger.py) — Pre-commitment escrow state machine, SHA-256 hash-chained audit trail, and JSON persistence.
+  - [`test_stce_and_metrics.py`](tests/unit/test_stce_and_metrics.py) — PyTorch `STCE`, `STCEUncertaintyHead`, `LSTMForecaster`, `GRUForecaster` forward/gradient checks, sliding window sequence builder, and RMSE/MAE/MAPE/Coverage metrics.
+  - [`test_vrptw_and_advisory.py`](tests/unit/test_vrptw_and_advisory.py) — Google OR-Tools Perishability-Aware VRPTW solver, reputation-ranked driver pull queue & decline reassignment, and Next-Season Crop Advisory.
+  - [`test_preprocess_and_monte_carlo.py`](tests/unit/test_preprocess_and_monte_carlo.py) — Exact AGMARKNET Soyabean (Itarsi Mandi) record counts (`2,718` raw $\rightarrow$ `2,359` trading $\rightarrow$ `3,460` continuous daily series, 12 engineered features) and $N = 2,000$ Monte Carlo simulation benchmark (`0` band violations).
+- **Integration & E2E Tests (`tests/integration/`)**:
+  - [`test_api_and_e2e_workflow.py`](tests/integration/test_api_and_e2e_workflow.py) — FastAPI `TestClient` end-to-end transaction lifecycle (`POST /api/quote` $\rightarrow$ `POST /api/escrow/{tx_id}/lock` $\rightarrow$ `POST /api/vrptw` $\rightarrow$ `POST /api/settle` $\rightarrow$ `GET /api/audit-trail`).

@@ -51,6 +51,83 @@
       "settlement": null,
       "quality_verified": false,
       "payout_released_inr": null
+    },
+    "AGRI-835485": {
+      "tx_id": "AGRI-835485",
+      "commodity": "Soyabean",
+      "mandi": "Itarsi",
+      "load_tonnes": 2.4,
+      "load_quintals": 24.0,
+      "p_point": 3421.0,
+      "p_low": 3239.0,
+      "p_up": 3637.0,
+      "p_mid": 3438.0,
+      "coverage_pct": 92.35,
+      "escrow_deposit_inr": 82512.0,
+      "farmer_id": "FARMER-MP-104",
+      "wholesaler_id": "WHOLESALE-ITR-22",
+      "driver_id": null,
+      "state": "SETTLED_AND_RELEASED",
+      "shap_reasons": [
+        {
+          "feature": "Recent Modal Price",
+          "column": "modal_price",
+          "mean_abs_shap": 0.01381,
+          "percentage": 24.22
+        },
+        {
+          "feature": "Min Price (day)",
+          "column": "min_price",
+          "mean_abs_shap": 0.01205,
+          "percentage": 21.14
+        },
+        {
+          "feature": "Max Price (day)",
+          "column": "max_price",
+          "mean_abs_shap": 0.00785,
+          "percentage": 13.77
+        },
+        {
+          "feature": "Price (t-7)",
+          "column": "price_lag_7",
+          "mean_abs_shap": 0.00456,
+          "percentage": 8.0
+        },
+        {
+          "feature": "Price (t-1)",
+          "column": "price_lag_1",
+          "mean_abs_shap": 0.00437,
+          "percentage": 7.66
+        }
+      ],
+      "settlement": {
+        "p_low": 3239.0,
+        "p_up": 3637.0,
+        "p_mid": 3438.0,
+        "p_rule": 3393.25,
+        "p_final": 3393.25,
+        "d_demand": 0.02,
+        "d_delay": 1.5,
+        "s_spoil": 0.1,
+        "q_dev": 0.03,
+        "weights": [
+          320.0,
+          12.5,
+          240.0,
+          280.0
+        ],
+        "offset_demand": 6.4,
+        "offset_delay": -18.75,
+        "offset_spoilage": -24.0,
+        "offset_quality": -8.4,
+        "total_offset": -44.75,
+        "midpoint_deviation_pct": 1.302,
+        "clamped_to_lower": false,
+        "clamped_to_upper": false,
+        "within_band": true
+      },
+      "quality_verified": true,
+      "payout_released_inr": 81438.0
     }
   },
   "audit_trail": [
@@ -73,6 +150,74 @@
       },
       "prev_hash": "0000000000000000...",
       "record_hash": "e7df089de9f672b864621ad847ee217bf821ac440c108fb83b25cd2259eaf9e1"
+    },
+    {
+      "seq_no": 2,
+      "tx_id": "AGRI-835485",
+      "timestamp": "2026-11-11T04:03:55.485386+00:00",
+      "event_type": "QUOTE_GENERATED",
+      "actor": "STCE_FORECAST_ENGINE",
+      "details": {
+        "commodity": "Soyabean",
+        "mandi": "Itarsi",
+        "load_tonnes": 2.4,
+        "price_band_inr_q": [
+          3239.0,
+          3637.0
+        ],
+        "point_forecast_inr_q": 3421.0,
+        "interval_coverage_pct": 92.35
+      },
+      "prev_hash": "e7df089de9f672b8...",
+      "record_hash": "eba063e43a5e78b159975ba09d77e7cc12763b76ebf422be09d8b4f40be20264"
+    },
+    {
+      "seq_no": 3,
+      "tx_id": "AGRI-835485",
+      "timestamp": "2026-11-11T04:03:55.490224+00:00",
+      "event_type": "ESCROW_LOCKED",
+      "actor": "FARMER & WHOLESALER",
+      "details": {
+        "committed_band_inr_q": [
+          3239.0,
+          3637.0
+        ],
+        "simulated_escrow_locked_inr": 82512.0
+      },
+      "prev_hash": "eba063e43a5e78b1...",
+      "record_hash": "50a232880ea6ffe8f56b801d13ebd7621484aee5c62d9ad20edf02fbd4f8a743"
+    },
+    {
+      "seq_no": 4,
+      "tx_id": "AGRI-835485",
+      "timestamp": "2026-11-11T04:03:55.595995+00:00",
+      "event_type": "QUALITY_VERIFIED",
+      "actor": "WHOLESALE-ITR-22",
+      "details": {
+        "quality_deviation_penalty": 0.03,
+        "spoilage_index": 0.1,
+        "verification_note": "Moisture & grading verified at destination mandi gate"
+      },
+      "prev_hash": "50a232880ea6ffe8...",
+      "record_hash": "237dadbce22eafeca7914a8bf993bcff0cafd4028444055c3e6fd9dfb1e4bcec"
+    },
+    {
+      "seq_no": 5,
+      "tx_id": "AGRI-835485",
+      "timestamp": "2026-11-11T04:03:55.596943+00:00",
+      "event_type": "SETTLED_AND_ESCROW_RELEASED",
+      "actor": "RULE_BASED_SETTLEMENT_ENGINE",
+      "details": {
+        "p_low": 3239.0,
+        "p_up": 3637.0,
+        "p_mid": 3438.0,
+        "p_rule": 3393.25,
+        "p_final_inr_q": 3393.25,
+        "within_committed_band": true,
+        "total_payout_released_inr": 81438.0
+      },
+      "prev_hash": "237dadbce22eafec...",
+      "record_hash": "256d1bbbfc2e7cdd3639e411ecaa0f81f98c9ca413db981fe6d21a5639c1b2f5"
     }
   ]
 }
