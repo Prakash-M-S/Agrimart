@@ -1,0 +1,78 @@
+{
+  "escrows": {
+    "AGRI-895286": {
+      "tx_id": "AGRI-895286",
+      "commodity": "Soyabean",
+      "mandi": "Itarsi",
+      "load_tonnes": 2.4,
+      "load_quintals": 24.0,
+      "p_point": 3421.0,
+      "p_low": 3239.0,
+      "p_up": 3637.0,
+      "p_mid": 3438.0,
+      "coverage_pct": 92.35,
+      "escrow_deposit_inr": 82512.0,
+      "farmer_id": "FARMER-MP-104",
+      "wholesaler_id": "WHOLESALE-ITR-22",
+      "driver_id": null,
+      "state": "QUOTE_GENERATED",
+      "shap_reasons": [
+        {
+          "feature": "Recent Modal Price",
+          "column": "modal_price",
+          "mean_abs_shap": 0.01381,
+          "percentage": 24.22
+        },
+        {
+          "feature": "Min Price (day)",
+          "column": "min_price",
+          "mean_abs_shap": 0.01205,
+          "percentage": 21.14
+        },
+        {
+          "feature": "Max Price (day)",
+          "column": "max_price",
+          "mean_abs_shap": 0.00785,
+          "percentage": 13.77
+        },
+        {
+          "feature": "Price (t-7)",
+          "column": "price_lag_7",
+          "mean_abs_shap": 0.00456,
+          "percentage": 8.0
+        },
+        {
+          "feature": "Price (t-1)",
+          "column": "price_lag_1",
+          "mean_abs_shap": 0.00437,
+          "percentage": 7.66
+        }
+      ],
+      "settlement": null,
+      "quality_verified": false,
+      "payout_released_inr": null
+    }
+  },
+  "audit_trail": [
+    {
+      "seq_no": 1,
+      "tx_id": "AGRI-895286",
+      "timestamp": "2026-11-11T03:31:35.286124+00:00",
+      "event_type": "QUOTE_GENERATED",
+      "actor": "STCE_FORECAST_ENGINE",
+      "details": {
+        "commodity": "Soyabean",
+        "mandi": "Itarsi",
+        "load_tonnes": 2.4,
+        "price_band_inr_q": [
+          3239.0,
+          3637.0
+        ],
+        "point_forecast_inr_q": 3421.0,
+        "interval_coverage_pct": 92.35
+      },
+      "prev_hash": "0000000000000000...",
+      "record_hash": "e7df089de9f672b864621ad847ee217bf821ac440c108fb83b25cd2259eaf9e1"
+    }
+  ]
+}

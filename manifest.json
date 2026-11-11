@@ -1,0 +1,10 @@
+{
+  "name": "AgriMart AI — Dynamic Pricing & Rule-Based Settlement Platform",
+  "short_name": "AgriMart AI",
+  "description": "Low-bandwidth agricultural supply-chain decision-support PWA integrating STCE confidence-band forecasting, SHAP explainability, pre-commitment escrow, rule-based settlement, and perishability-aware VRPTW routing.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#15803d",
+  "icons": []
+}

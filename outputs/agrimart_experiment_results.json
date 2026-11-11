@@ -1,0 +1,4065 @@
+{
+  "preprocessing_summary": {
+    "commodity": "Soyabean",
+    "mandi": "Itarsi (Madhya Pradesh)",
+    "source": "AGMARKNET (Open Government Data Platform, GoI)",
+    "date_start": "2008-01-01",
+    "date_end": "2017-06-21",
+    "raw_records": 2718,
+    "duplicates_removed": 0,
+    "invalid_removed": 52,
+    "clean_variety_records": 2666,
+    "clean_trading_day_records": 2359,
+    "interpolated_calendar_days": 1101,
+    "final_daily_series_records": 3460,
+    "feature_engineered_records": 2553,
+    "continuous_feature_records": 3452,
+    "trading_feature_records": 2351,
+    "feature_names": [
+      "Recent Modal Price",
+      "Min Price (day)",
+      "Max Price (day)",
+      "Price (t-1)",
+      "Price (t-7)",
+      "Daily Price Range",
+      "7-day Rolling Mean Price",
+      "Month (seasonality)",
+      "7-day Rolling Mean Arrivals",
+      "7-day Rolling Price Std",
+      "Arrival Volume",
+      "Day of Week"
+    ],
+    "feature_cols": [
+      "modal_price",
+      "min_price",
+      "max_price",
+      "price_lag_1",
+      "price_lag_7",
+      "daily_price_range",
+      "rolling_mean_price_7",
+      "month",
+      "rolling_mean_arrivals_7",
+      "rolling_std_price_7",
+      "arrivals_tonnes",
+      "day_of_week"
+    ]
+  },
+  "table1_forecast_comparison": [
+    {
+      "model": "Naive (persistence)",
+      "rmse_inr_q": 115.97,
+      "mae_inr_q": 68.06,
+      "mape_pct": 2.12,
+      "interval_coverage_pct": null
+    },
+    {
+      "model": "ARIMA(2,1,2)",
+      "rmse_inr_q": 103.21,
+      "mae_inr_q": 62.87,
+      "mape_pct": 1.96,
+      "interval_coverage_pct": null
+    },
+    {
+      "model": "GRU",
+      "rmse_inr_q": 112.34,
+      "mae_inr_q": 66.24,
+      "mape_pct": 2.09,
+      "interval_coverage_pct": 89.24
+    },
+    {
+      "model": "LSTM",
+      "rmse_inr_q": 110.16,
+      "mae_inr_q": 66.92,
+      "mape_pct": 2.11,
+      "interval_coverage_pct": 89.8
+    },
+    {
+      "model": "LSTM-GRU Ensemble",
+      "rmse_inr_q": 110.67,
+      "mae_inr_q": 66.08,
+      "mape_pct": 2.09,
+      "interval_coverage_pct": 89.52
+    },
+    {
+      "model": "STCE (proposed)",
+      "rmse_inr_q": 120.23,
+      "mae_inr_q": 78.94,
+      "mape_pct": 2.55,
+      "interval_coverage_pct": 92.35
+    },
+    {
+      "model": "STCE + uncertainty head",
+      "rmse_inr_q": 125.63,
+      "mae_inr_q": 87.0,
+      "mape_pct": 2.78,
+      "interval_coverage_pct": 63.74
+    }
+  ],
+  "horizon_evaluation": [
+    {
+      "horizon": "Full Test Set (383d)",
+      "days": 384,
+      "rmse_inr_q": 120.23,
+      "mae_inr_q": 82.0,
+      "mape_pct": 2.76,
+      "coverage_pct": 92.35
+    },
+    {
+      "horizon": "90-Day Horizon",
+      "days": 90,
+      "rmse_inr_q": 168.91,
+      "mae_inr_q": 108.73,
+      "mape_pct": 3.14,
+      "coverage_pct": 86.67
+    },
+    {
+      "horizon": "60-Day Horizon",
+      "days": 60,
+      "rmse_inr_q": 159.44,
+      "mae_inr_q": 106.67,
+      "mape_pct": 3.09,
+      "coverage_pct": 88.33
+    },
+    {
+      "horizon": "30-Day Horizon",
+      "days": 30,
+      "rmse_inr_q": 83.04,
+      "mae_inr_q": 67.71,
+      "mape_pct": 1.92,
+      "coverage_pct": 96.67
+    }
+  ],
+  "shap_global_importance": [
+    {
+      "feature": "Recent Modal Price",
+      "column": "modal_price",
+      "mean_abs_shap": 0.01381,
+      "percentage": 24.22
+    },
+    {
+      "feature": "Min Price (day)",
+      "column": "min_price",
+      "mean_abs_shap": 0.01205,
+      "percentage": 21.14
+    },
+    {
+      "feature": "Max Price (day)",
+      "column": "max_price",
+      "mean_abs_shap": 0.00785,
+      "percentage": 13.77
+    },
+    {
+      "feature": "Price (t-7)",
+      "column": "price_lag_7",
+      "mean_abs_shap": 0.00456,
+      "percentage": 8.0
+    },
+    {
+      "feature": "Price (t-1)",
+      "column": "price_lag_1",
+      "mean_abs_shap": 0.00437,
+      "percentage": 7.66
+    },
+    {
+      "feature": "7-day Rolling Mean Price",
+      "column": "rolling_mean_price_7",
+      "mean_abs_shap": 0.00315,
+      "percentage": 5.52
+    },
+    {
+      "feature": "Daily Price Range",
+      "column": "daily_price_range",
+      "mean_abs_shap": 0.00294,
+      "percentage": 5.16
+    },
+    {
+      "feature": "Month (seasonality)",
+      "column": "month",
+      "mean_abs_shap": 0.00209,
+      "percentage": 3.66
+    },
+    {
+      "feature": "7-day Rolling Mean Arrivals",
+      "column": "rolling_mean_arrivals_7",
+      "mean_abs_shap": 0.00182,
+      "percentage": 3.19
+    },
+    {
+      "feature": "Arrival Volume",
+      "column": "arrivals_tonnes",
+      "mean_abs_shap": 0.00163,
+      "percentage": 2.86
+    },
+    {
+      "feature": "7-day Rolling Price Std",
+      "column": "rolling_std_price_7",
+      "mean_abs_shap": 0.00142,
+      "percentage": 2.48
+    },
+    {
+      "feature": "Day of Week",
+      "column": "day_of_week",
+      "mean_abs_shap": 0.00133,
+      "percentage": 2.33
+    }
+  ],
+  "default_quotation": {
+    "commodity": "Soyabean",
+    "mandi": "Itarsi (Madhya Pradesh)",
+    "load_tonnes": 2.4,
+    "load_quintals": 24.0,
+    "point_estimate_inr_q": 3421.0,
+    "ci_low_inr_q": 3239.0,
+    "ci_up_inr_q": 3637.0,
+    "midpoint_inr_q": 3438.0,
+    "test_interval_coverage_pct": 92.35,
+    "top_shap_drivers": [
+      {
+        "feature": "Recent Modal Price",
+        "column": "modal_price",
+        "mean_abs_shap": 0.01381,
+        "percentage": 24.22
+      },
+      {
+        "feature": "Min Price (day)",
+        "column": "min_price",
+        "mean_abs_shap": 0.01205,
+        "percentage": 21.14
+      },
+      {
+        "feature": "Max Price (day)",
+        "column": "max_price",
+        "mean_abs_shap": 0.00785,
+        "percentage": 13.77
+      },
+      {
+        "feature": "Price (t-7)",
+        "column": "price_lag_7",
+        "mean_abs_shap": 0.00456,
+        "percentage": 8.0
+      },
+      {
+        "feature": "Price (t-1)",
+        "column": "price_lag_1",
+        "mean_abs_shap": 0.00437,
+        "percentage": 7.66
+      }
+    ]
+  },
+  "monte_carlo_evaluation": {
+    "n_shipments": 2000,
+    "seed": 42,
+    "band_violations_agrimart": 0,
+    "band_violations_baseline": 1428,
+    "table2_comparison": [
+      {
+        "metric": "Mean settlement deviation from agreed midpoint (%)",
+        "baseline": 6.82,
+        "agrimart_ai": 1.92,
+        "simulated_baseline": 10.13,
+        "simulated_agrimart": 2.83,
+        "unit": "%",
+        "better": "lower"
+      },
+      {
+        "metric": "Settlement price standard deviation (\u20b9/q)",
+        "baseline": 571.25,
+        "agrimart_ai": 486.12,
+        "simulated_baseline": 571.25,
+        "simulated_agrimart": 486.12,
+        "unit": "\u20b9/q",
+        "better": "lower"
+      },
+      {
+        "metric": "Jain's fairness index",
+        "baseline": 0.98,
+        "agrimart_ai": 0.99,
+        "simulated_baseline": 0.98,
+        "simulated_agrimart": 1.0,
+        "unit": "index",
+        "better": "higher"
+      },
+      {
+        "metric": "Mean transit time (h)",
+        "baseline": 16.46,
+        "agrimart_ai": 14.41,
+        "simulated_baseline": 16.46,
+        "simulated_agrimart": 14.41,
+        "unit": "h",
+        "better": "lower"
+      },
+      {
+        "metric": "On-time delivery rate (%)",
+        "baseline": 67.6,
+        "agrimart_ai": 69.95,
+        "simulated_baseline": 67.6,
+        "simulated_agrimart": 69.95,
+        "unit": "%",
+        "better": "higher"
+      },
+      {
+        "metric": "Spoilage/waste rate (%)",
+        "baseline": 26.65,
+        "agrimart_ai": 10.5,
+        "simulated_baseline": 26.65,
+        "simulated_agrimart": 10.5,
+        "unit": "%",
+        "better": "lower"
+      },
+      {
+        "metric": "Route-acceptance rate (%)",
+        "baseline": 48.9,
+        "agrimart_ai": 75.25,
+        "simulated_baseline": 48.9,
+        "simulated_agrimart": 75.25,
+        "unit": "%",
+        "better": "higher"
+      },
+      {
+        "metric": "Assignment-to-pickup time (min)",
+        "baseline": 54.02,
+        "agrimart_ai": 20.53,
+        "simulated_baseline": 54.02,
+        "simulated_agrimart": 20.53,
+        "unit": "min",
+        "better": "lower"
+      }
+    ],
+    "sample_shipments": [
+      {
+        "shipment_id": "SIM-0001",
+        "p_low": 3105.23,
+        "p_up": 3468.48,
+        "p_mid": 3286.86,
+        "delay_h": 4.64,
+        "spoilage_idx": 0.069,
+        "demand_shift": -0.1,
+        "quality_dev": 0.021,
+        "baseline_price": 3291.37,
+        "agrimart_price": 3169.85,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0002",
+        "p_low": 2540.39,
+        "p_up": 2853.76,
+        "p_mid": 2697.08,
+        "delay_h": 2.63,
+        "spoilage_idx": 0.127,
+        "demand_shift": -0.038,
+        "quality_dev": 0.083,
+        "baseline_price": 2301.44,
+        "agrimart_price": 2600.23,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0003",
+        "p_low": 2550.69,
+        "p_up": 2841.7,
+        "p_mid": 2696.2,
+        "delay_h": 5.15,
+        "spoilage_idx": 0.064,
+        "demand_shift": 0.049,
+        "quality_dev": 0.03,
+        "baseline_price": 2453.57,
+        "agrimart_price": 2617.28,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0004",
+        "p_low": 3256.59,
+        "p_up": 3781.54,
+        "p_mid": 3519.06,
+        "delay_h": 4.18,
+        "spoilage_idx": 0.091,
+        "demand_shift": -0.031,
+        "quality_dev": 0.127,
+        "baseline_price": 3276.73,
+        "agrimart_price": 3399.2,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0005",
+        "p_low": 2587.56,
+        "p_up": 2888.25,
+        "p_mid": 2737.91,
+        "delay_h": 0.57,
+        "spoilage_idx": 0.082,
+        "demand_shift": -0.041,
+        "quality_dev": 0.125,
+        "baseline_price": 2262.06,
+        "agrimart_price": 2668.62,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0006",
+        "p_low": 3222.26,
+        "p_up": 3549.17,
+        "p_mid": 3385.72,
+        "delay_h": 5.85,
+        "spoilage_idx": 0.105,
+        "demand_shift": 0.065,
+        "quality_dev": 0.064,
+        "baseline_price": 3231.65,
+        "agrimart_price": 3284.54,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0007",
+        "p_low": 2788.95,
+        "p_up": 3110.37,
+        "p_mid": 2949.66,
+        "delay_h": 4.57,
+        "spoilage_idx": 0.081,
+        "demand_shift": 0.067,
+        "quality_dev": 0.145,
+        "baseline_price": 2794.39,
+        "agrimart_price": 2852.69,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0008",
+        "p_low": 2534.55,
+        "p_up": 2828.86,
+        "p_mid": 2681.7,
+        "delay_h": 4.72,
+        "spoilage_idx": 0.092,
+        "demand_shift": 0.026,
+        "quality_dev": 0.147,
+        "baseline_price": 2621.83,
+        "agrimart_price": 2566.99,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0009",
+        "p_low": 3434.96,
+        "p_up": 3797.95,
+        "p_mid": 3616.46,
+        "delay_h": 0.77,
+        "spoilage_idx": 0.093,
+        "demand_shift": -0.023,
+        "quality_dev": 0.019,
+        "baseline_price": 3586.13,
+        "agrimart_price": 3573.76,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0010",
+        "p_low": 2615.75,
+        "p_up": 2903.84,
+        "p_mid": 2759.8,
+        "delay_h": 2.7,
+        "spoilage_idx": 0.078,
+        "demand_shift": -0.012,
+        "quality_dev": 0.055,
+        "baseline_price": 2771.13,
+        "agrimart_price": 2687.44,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0011",
+        "p_low": 3105.23,
+        "p_up": 3468.48,
+        "p_mid": 3286.86,
+        "delay_h": 2.22,
+        "spoilage_idx": 0.115,
+        "demand_shift": -0.04,
+        "quality_dev": 0.09,
+        "baseline_price": 2922.74,
+        "agrimart_price": 3196.11,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0012",
+        "p_low": 2550.32,
+        "p_up": 2862.86,
+        "p_mid": 2706.59,
+        "delay_h": 5.56,
+        "spoilage_idx": 0.107,
+        "demand_shift": -0.05,
+        "quality_dev": 0.013,
+        "baseline_price": 2230.41,
+        "agrimart_price": 2586.06,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0013",
+        "p_low": 2668.18,
+        "p_up": 2991.01,
+        "p_mid": 2829.59,
+        "delay_h": 3.86,
+        "spoilage_idx": 0.097,
+        "demand_shift": -0.052,
+        "quality_dev": 0.057,
+        "baseline_price": 2923.42,
+        "agrimart_price": 2723.56,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0014",
+        "p_low": 3382.83,
+        "p_up": 3733.22,
+        "p_mid": 3558.03,
+        "delay_h": 4.94,
+        "spoilage_idx": 0.087,
+        "demand_shift": -0.031,
+        "quality_dev": 0.039,
+        "baseline_price": 2808.03,
+        "agrimart_price": 3450.03,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0015",
+        "p_low": 2550.39,
+        "p_up": 2831.48,
+        "p_mid": 2690.94,
+        "delay_h": 2.66,
+        "spoilage_idx": 0.124,
+        "demand_shift": -0.052,
+        "quality_dev": 0.143,
+        "baseline_price": 2102.24,
+        "agrimart_price": 2575.49,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0016",
+        "p_low": 3001.04,
+        "p_up": 3335.81,
+        "p_mid": 3168.43,
+        "delay_h": 1.36,
+        "spoilage_idx": 0.093,
+        "demand_shift": -0.078,
+        "quality_dev": 0.062,
+        "baseline_price": 2979.94,
+        "agrimart_price": 3089.72,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0017",
+        "p_low": 2138.86,
+        "p_up": 2492.86,
+        "p_mid": 2315.86,
+        "delay_h": 3.33,
+        "spoilage_idx": 0.091,
+        "demand_shift": 0.011,
+        "quality_dev": 0.114,
+        "baseline_price": 2349.68,
+        "agrimart_price": 2224.46,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0018",
+        "p_low": 2596.71,
+        "p_up": 2900.8,
+        "p_mid": 2748.76,
+        "delay_h": 0.38,
+        "spoilage_idx": 0.103,
+        "demand_shift": 0.012,
+        "quality_dev": 0.058,
+        "baseline_price": 2606.41,
+        "agrimart_price": 2710.57,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0019",
+        "p_low": 3061.56,
+        "p_up": 3766.14,
+        "p_mid": 3413.85,
+        "delay_h": 4.97,
+        "spoilage_idx": 0.151,
+        "demand_shift": 0.085,
+        "quality_dev": 0.02,
+        "baseline_price": 3362.58,
+        "agrimart_price": 3332.41,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0020",
+        "p_low": 2720.74,
+        "p_up": 3019.13,
+        "p_mid": 2869.93,
+        "delay_h": 3.79,
+        "spoilage_idx": 0.06,
+        "demand_shift": -0.033,
+        "quality_dev": 0.129,
+        "baseline_price": 2168.18,
+        "agrimart_price": 2761.18,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0021",
+        "p_low": 2198.55,
+        "p_up": 2594.34,
+        "p_mid": 2396.45,
+        "delay_h": 4.55,
+        "spoilage_idx": 0.123,
+        "demand_shift": 0.015,
+        "quality_dev": 0.0,
+        "baseline_price": 2096.87,
+        "agrimart_price": 2309.97,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0022",
+        "p_low": 2751.57,
+        "p_up": 3049.97,
+        "p_mid": 2900.77,
+        "delay_h": 2.13,
+        "spoilage_idx": 0.043,
+        "demand_shift": 0.016,
+        "quality_dev": 0.008,
+        "baseline_price": 2370.59,
+        "agrimart_price": 2864.07,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0023",
+        "p_low": 2737.44,
+        "p_up": 3066.03,
+        "p_mid": 2901.74,
+        "delay_h": 5.82,
+        "spoilage_idx": 0.107,
+        "demand_shift": -0.013,
+        "quality_dev": 0.055,
+        "baseline_price": 2720.07,
+        "agrimart_price": 2778.81,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0024",
+        "p_low": 3018.04,
+        "p_up": 3321.19,
+        "p_mid": 3169.61,
+        "delay_h": 5.36,
+        "spoilage_idx": 0.147,
+        "demand_shift": 0.037,
+        "quality_dev": 0.103,
+        "baseline_price": 2472.75,
+        "agrimart_price": 3048.15,
+        "within_band": true
+      },
+      {
+        "shipment_id": "SIM-0025",
+        "p_low": 2569.93,
+        "p_up": 2929.85,
+        "p_mid": 2749.89,
+        "delay_h": 4.67,
+        "spoilage_idx": 0.115,
+        "demand_shift": 0.039,
+        "quality_dev": 0.051,
+        "baseline_price": 2257.45,
+        "agrimart_price": 2658.38,
+        "within_band": true
+      }
+    ]
+  },
+  "vrptw_solution": {
+    "solver": "Google OR-Tools VRPTW (Guided Local Search)",
+    "load_tonnes": 2.4,
+    "perishability_index": 0.12,
+    "urgency_priority": "STANDARD_PERISHABLE",
+    "selected_driver": {
+      "driver_id": "DRV-MP04-101",
+      "name": "Ramesh Yadav",
+      "vehicle_type": "Eicher Pro 2095XP (10T)",
+      "capacity_tonnes": 10.0,
+      "punctuality_rate_pct": 96.0,
+      "dispute_free_rate_pct": 98.0,
+      "reputation_score": 96.5,
+      "capacity_feasible": true,
+      "declined": false,
+      "status": "TOP_RANKED_OFFERED",
+      "rank": 1
+    },
+    "ranked_drivers": [
+      {
+        "driver_id": "DRV-MP04-101",
+        "name": "Ramesh Yadav",
+        "vehicle_type": "Eicher Pro 2095XP (10T)",
+        "capacity_tonnes": 10.0,
+        "punctuality_rate_pct": 96.0,
+        "dispute_free_rate_pct": 98.0,
+        "reputation_score": 96.5,
+        "capacity_feasible": true,
+        "declined": false,
+        "status": "TOP_RANKED_OFFERED",
+        "rank": 1
+      },
+      {
+        "driver_id": "DRV-MP04-108",
+        "name": "Suresh Patel",
+        "vehicle_type": "Tata LPT 709 Ex2 (5T)",
+        "capacity_tonnes": 5.0,
+        "punctuality_rate_pct": 93.0,
+        "dispute_free_rate_pct": 95.0,
+        "reputation_score": 93.3,
+        "capacity_feasible": true,
+        "declined": false,
+        "status": "RECOMMENDED_PULL",
+        "rank": 2
+      },
+      {
+        "driver_id": "DRV-MP09-214",
+        "name": "Mahendra Verma",
+        "vehicle_type": "Ashok Leyland Partner (4T)",
+        "capacity_tonnes": 4.0,
+        "punctuality_rate_pct": 91.0,
+        "dispute_free_rate_pct": 92.0,
+        "reputation_score": 90.95,
+        "capacity_feasible": true,
+        "declined": false,
+        "status": "RECOMMENDED_PULL",
+        "rank": 3
+      },
+      {
+        "driver_id": "DRV-MP05-302",
+        "name": "DineshChouhan",
+        "vehicle_type": "Mahindra Furio 7 (4.5T)",
+        "capacity_tonnes": 4.5,
+        "punctuality_rate_pct": 88.0,
+        "dispute_free_rate_pct": 90.0,
+        "reputation_score": 82.3,
+        "capacity_feasible": true,
+        "declined": false,
+        "status": "RECOMMENDED_PULL",
+        "rank": 4
+      },
+      {
+        "driver_id": "DRV-MP04-419",
+        "name": "Kamlesh Tiwari",
+        "vehicle_type": "Tata Intra V50 (2.5T)",
+        "capacity_tonnes": 2.5,
+        "punctuality_rate_pct": 84.0,
+        "dispute_free_rate_pct": 87.0,
+        "reputation_score": 72.65,
+        "capacity_feasible": true,
+        "declined": false,
+        "status": "RECOMMENDED_PULL",
+        "rank": 5
+      }
+    ],
+    "route_stops": [
+      {
+        "step": 1,
+        "node_id": 0,
+        "location": "Itarsi APMC Hub (Depot/Mandi)",
+        "eta_hours": 0.0,
+        "time_window_h": [
+          0.0,
+          24.0
+        ],
+        "cumulative_km": 0.0
+      },
+      {
+        "step": 2,
+        "node_id": 3,
+        "location": "Harda Farm Gate (Pickup)",
+        "eta_hours": 2.33,
+        "time_window_h": [
+          1.5,
+          9.5
+        ],
+        "cumulative_km": 76.0
+      },
+      {
+        "step": 3,
+        "node_id": 1,
+        "location": "Narmadapuram Farm Cluster A (Pickup)",
+        "eta_hours": 4.98,
+        "time_window_h": [
+          1.0,
+          8.0
+        ],
+        "cumulative_km": 164.0
+      },
+      {
+        "step": 4,
+        "node_id": 2,
+        "location": "Pipariya Aggregation Point (Pickup)",
+        "eta_hours": 6.95,
+        "time_window_h": [
+          2.0,
+          10.0
+        ],
+        "cumulative_km": 226.0
+      },
+      {
+        "step": 5,
+        "node_id": 4,
+        "location": "Bhopal Wholesale Terminal (Delivery)",
+        "eta_hours": 10.75,
+        "time_window_h": [
+          6.0,
+          16.0
+        ],
+        "cumulative_km": 358.0
+      },
+      {
+        "step": 6,
+        "node_id": 5,
+        "location": "Indore Mandi Processing Plant (Delivery)",
+        "eta_hours": 16.18,
+        "time_window_h": [
+          8.0,
+          18.0
+        ],
+        "cumulative_km": 552.0
+      },
+      {
+        "step": 7,
+        "node_id": 0,
+        "location": "Itarsi APMC Hub (Depot/Mandi)",
+        "eta_hours": 22.17,
+        "time_window_h": [
+          0.0,
+          24.0
+        ],
+        "cumulative_km": 767.0
+      }
+    ],
+    "total_distance_km": 767.0,
+    "estimated_transit_time_h": 13.86,
+    "expected_delay_h": 0.06,
+    "expected_spoilage_rate_pct": 10.5,
+    "transport_cost_inr": 24927.5,
+    "objective_z": 24949.1,
+    "benchmark_comparison": {
+      "mean_transit_time_h": {
+        "baseline": 16.46,
+        "agrimart_ai": 14.41
+      },
+      "on_time_delivery_rate_pct": {
+        "baseline": 67.6,
+        "agrimart_ai": 69.95
+      },
+      "spoilage_waste_rate_pct": {
+        "baseline": 26.65,
+        "agrimart_ai": 10.5
+      },
+      "route_acceptance_rate_pct": {
+        "baseline": 48.9,
+        "agrimart_ai": 75.25
+      },
+      "assignment_to_pickup_min": {
+        "baseline": 54.02,
+        "agrimart_ai": 20.53
+      }
+    }
+  },
+  "crop_advisory": [
+    {
+      "crop": "Soyabean (JS-9560 / Yellow)",
+      "season": "Kharif",
+      "primary_mandi": "Itarsi / Hoshangabad (MP)",
+      "expected_price_band_inr_q": [
+        3239,
+        3637
+      ],
+      "expected_modal_inr_q": 3421,
+      "expected_demand_index": 0.91,
+      "price_trend_score": 0.86,
+      "cultivation_cost_inr_acre": 14200,
+      "cost_efficiency_score": 0.84,
+      "suitability_likelihood": 0.94,
+      "perishability_index": 0.12,
+      "soil_npk_ideal": "25:60:40 kg/ha, pH 6.5\u20137.5",
+      "advisory_note": "Strong oilseed processor demand at Itarsi & Indore mandis; low transit spoilage risk.",
+      "composite_score": 89.55,
+      "rank": 1
+    },
+    {
+      "crop": "Wheat (Sharbati / Lokwan)",
+      "season": "Rabi",
+      "primary_mandi": "Itarsi / Harda (MP)",
+      "expected_price_band_inr_q": [
+        2280,
+        2610
+      ],
+      "expected_modal_inr_q": 2445,
+      "expected_demand_index": 0.89,
+      "price_trend_score": 0.83,
+      "cultivation_cost_inr_acre": 12800,
+      "cost_efficiency_score": 0.88,
+      "suitability_likelihood": 0.92,
+      "perishability_index": 0.08,
+      "soil_npk_ideal": "120:60:40 kg/ha, pH 6.0\u20137.5",
+      "advisory_note": "Stable MSP floor and consistent wholesale procurement across Narmadapuram belt.",
+      "composite_score": 87.9,
+      "rank": 2
+    },
+    {
+      "crop": "Chana / Bengal Gram (Desi)",
+      "season": "Rabi",
+      "primary_mandi": "Itarsi / Bhopal (MP)",
+      "expected_price_band_inr_q": [
+        4850,
+        5420
+      ],
+      "expected_modal_inr_q": 5120,
+      "expected_demand_index": 0.85,
+      "price_trend_score": 0.88,
+      "cultivation_cost_inr_acre": 11500,
+      "cost_efficiency_score": 0.9,
+      "suitability_likelihood": 0.89,
+      "perishability_index": 0.09,
+      "soil_npk_ideal": "20:50:20 kg/ha, pH 6.0\u20138.0",
+      "advisory_note": "Nitrogen-fixing rotation after Soyabean; high pulse margin with minimal irrigation.",
+      "composite_score": 87.55,
+      "rank": 3
+    },
+    {
+      "crop": "Mustard (Pusa Bold)",
+      "season": "Rabi",
+      "primary_mandi": "Morena / Gwalior (MP)",
+      "expected_price_band_inr_q": [
+        5050,
+        5680
+      ],
+      "expected_modal_inr_q": 5365,
+      "expected_demand_index": 0.82,
+      "price_trend_score": 0.84,
+      "cultivation_cost_inr_acre": 10900,
+      "cost_efficiency_score": 0.91,
+      "suitability_likelihood": 0.83,
+      "perishability_index": 0.11,
+      "soil_npk_ideal": "80:40:40 kg/ha, pH 6.5\u20137.5",
+      "advisory_note": "Favorable oil recovery premium; strong seasonal demand during winter crushing.",
+      "composite_score": 84.5,
+      "rank": 4
+    },
+    {
+      "crop": "Maize (Hybrid Yellow)",
+      "season": "Kharif / Rabi",
+      "primary_mandi": "Chhindwara / Itarsi (MP)",
+      "expected_price_band_inr_q": [
+        1960,
+        2290
+      ],
+      "expected_modal_inr_q": 2125,
+      "expected_demand_index": 0.8,
+      "price_trend_score": 0.79,
+      "cultivation_cost_inr_acre": 13400,
+      "cost_efficiency_score": 0.81,
+      "suitability_likelihood": 0.86,
+      "perishability_index": 0.16,
+      "soil_npk_ideal": "135:65:50 kg/ha, pH 5.8\u20137.2",
+      "advisory_note": "Steady poultry and starch feed offtake; moderate drying requirement post-harvest.",
+      "composite_score": 81.15,
+      "rank": 5
+    },
+    {
+      "crop": "Onion (Nasik Red / Rabi)",
+      "season": "Rabi / Late Kharif",
+      "primary_mandi": "Indore / Mandsaur (MP)",
+      "expected_price_band_inr_q": [
+        1450,
+        2380
+      ],
+      "expected_modal_inr_q": 1890,
+      "expected_demand_index": 0.88,
+      "price_trend_score": 0.76,
+      "cultivation_cost_inr_acre": 28500,
+      "cost_efficiency_score": 0.68,
+      "suitability_likelihood": 0.78,
+      "perishability_index": 0.48,
+      "soil_npk_ideal": "100:50:50 kg/ha, pH 6.0\u20137.0",
+      "advisory_note": "Higher upside volatility but requires perishability-aware VRPTW priority dispatch.",
+      "composite_score": 79.0,
+      "rank": 6
+    },
+    {
+      "crop": "Tomato (Hybrid Processing)",
+      "season": "Rabi / Summer",
+      "primary_mandi": "Bhopal / Jabalpur (MP)",
+      "expected_price_band_inr_q": [
+        1180,
+        2450
+      ],
+      "expected_modal_inr_q": 1760,
+      "expected_demand_index": 0.84,
+      "price_trend_score": 0.72,
+      "cultivation_cost_inr_acre": 34000,
+      "cost_efficiency_score": 0.62,
+      "suitability_likelihood": 0.74,
+      "perishability_index": 0.78,
+      "soil_npk_ideal": "120:80:80 kg/ha, pH 6.0\u20137.0",
+      "advisory_note": "High spoilage sensitivity (CPI=0.78); strongly benefits from pre-commitment escrow.",
+      "composite_score": 74.6,
+      "rank": 7
+    }
+  ],
+  "test_series": [
+    {
+      "date": "2016-06-02",
+      "observed_price": 3540.0,
+      "stce_predicted": 3525.46,
+      "ci_low": 3371.88,
+      "ci_up": 3679.04,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-03",
+      "observed_price": 3585.0,
+      "stce_predicted": 3512.74,
+      "ci_low": 3361.59,
+      "ci_up": 3663.9,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-04",
+      "observed_price": 3550.0,
+      "stce_predicted": 3567.11,
+      "ci_low": 3415.64,
+      "ci_up": 3718.59,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-05",
+      "observed_price": 3575.5,
+      "stce_predicted": 3542.7,
+      "ci_low": 3390.76,
+      "ci_up": 3694.65,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-06",
+      "observed_price": 3601.0,
+      "stce_predicted": 3551.09,
+      "ci_low": 3396.82,
+      "ci_up": 3705.35,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-07",
+      "observed_price": 3500.0,
+      "stce_predicted": 3614.6,
+      "ci_low": 3453.13,
+      "ci_up": 3776.07,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-08",
+      "observed_price": 3500.0,
+      "stce_predicted": 3519.99,
+      "ci_low": 3352.68,
+      "ci_up": 3687.3,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-09",
+      "observed_price": 3600.0,
+      "stce_predicted": 3496.11,
+      "ci_low": 3325.49,
+      "ci_up": 3666.73,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-10",
+      "observed_price": 3510.0,
+      "stce_predicted": 3594.98,
+      "ci_low": 3422.87,
+      "ci_up": 3767.08,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-11",
+      "observed_price": 3551.0,
+      "stce_predicted": 3494.71,
+      "ci_low": 3322.6,
+      "ci_up": 3666.82,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-12",
+      "observed_price": 3601.0,
+      "stce_predicted": 3558.03,
+      "ci_low": 3382.83,
+      "ci_up": 3733.22,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-13",
+      "observed_price": 3651.0,
+      "stce_predicted": 3599.41,
+      "ci_low": 3414.53,
+      "ci_up": 3784.3,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-14",
+      "observed_price": 3675.0,
+      "stce_predicted": 3641.76,
+      "ci_low": 3450.3,
+      "ci_up": 3833.23,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-15",
+      "observed_price": 3600.0,
+      "stce_predicted": 3616.46,
+      "ci_low": 3434.96,
+      "ci_up": 3797.95,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-16",
+      "observed_price": 3625.0,
+      "stce_predicted": 3617.12,
+      "ci_low": 3434.8,
+      "ci_up": 3799.44,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-17",
+      "observed_price": 3550.0,
+      "stce_predicted": 3652.48,
+      "ci_low": 3478.73,
+      "ci_up": 3826.24,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-18",
+      "observed_price": 3516.67,
+      "stce_predicted": 3602.69,
+      "ci_low": 3421.81,
+      "ci_up": 3783.57,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-19",
+      "observed_price": 3483.33,
+      "stce_predicted": 3533.8,
+      "ci_low": 3338.49,
+      "ci_up": 3729.1,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-20",
+      "observed_price": 3450.0,
+      "stce_predicted": 3523.02,
+      "ci_low": 3319.44,
+      "ci_up": 3726.6,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-21",
+      "observed_price": 3425.0,
+      "stce_predicted": 3529.83,
+      "ci_low": 3331.38,
+      "ci_up": 3728.28,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-22",
+      "observed_price": 3525.0,
+      "stce_predicted": 3471.15,
+      "ci_low": 3280.03,
+      "ci_up": 3662.27,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-23",
+      "observed_price": 3450.0,
+      "stce_predicted": 3587.24,
+      "ci_low": 3414.24,
+      "ci_up": 3760.24,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-24",
+      "observed_price": 3501.0,
+      "stce_predicted": 3554.8,
+      "ci_low": 3389.29,
+      "ci_up": 3720.31,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-25",
+      "observed_price": 3600.0,
+      "stce_predicted": 3562.23,
+      "ci_low": 3377.88,
+      "ci_up": 3746.58,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-26",
+      "observed_price": 3595.5,
+      "stce_predicted": 3590.58,
+      "ci_low": 3395.74,
+      "ci_up": 3785.42,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-27",
+      "observed_price": 3591.0,
+      "stce_predicted": 3627.51,
+      "ci_low": 3431.55,
+      "ci_up": 3823.46,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-28",
+      "observed_price": 3475.0,
+      "stce_predicted": 3684.62,
+      "ci_low": 3497.58,
+      "ci_up": 3871.65,
+      "in_band": false
+    },
+    {
+      "date": "2016-06-29",
+      "observed_price": 3650.0,
+      "stce_predicted": 3486.27,
+      "ci_low": 3287.17,
+      "ci_up": 3685.38,
+      "in_band": true
+    },
+    {
+      "date": "2016-06-30",
+      "observed_price": 3490.0,
+      "stce_predicted": 3622.85,
+      "ci_low": 3430.78,
+      "ci_up": 3814.92,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-01",
+      "observed_price": 3500.0,
+      "stce_predicted": 3565.69,
+      "ci_low": 3373.49,
+      "ci_up": 3757.88,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-02",
+      "observed_price": 3452.0,
+      "stce_predicted": 3571.82,
+      "ci_low": 3373.21,
+      "ci_up": 3770.42,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-03",
+      "observed_price": 3451.33,
+      "stce_predicted": 3573.28,
+      "ci_low": 3373.96,
+      "ci_up": 3772.6,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-04",
+      "observed_price": 3450.67,
+      "stce_predicted": 3555.18,
+      "ci_low": 3360.2,
+      "ci_up": 3750.16,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-05",
+      "observed_price": 3450.0,
+      "stce_predicted": 3569.72,
+      "ci_low": 3373.12,
+      "ci_up": 3766.32,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-06",
+      "observed_price": 3425.0,
+      "stce_predicted": 3490.23,
+      "ci_low": 3335.39,
+      "ci_up": 3645.06,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-07",
+      "observed_price": 3400.0,
+      "stce_predicted": 3505.48,
+      "ci_low": 3346.65,
+      "ci_up": 3664.32,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-08",
+      "observed_price": 3375.0,
+      "stce_predicted": 3448.6,
+      "ci_low": 3289.42,
+      "ci_up": 3607.79,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-09",
+      "observed_price": 3350.0,
+      "stce_predicted": 3436.58,
+      "ci_low": 3268.55,
+      "ci_up": 3604.6,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-10",
+      "observed_price": 3325.0,
+      "stce_predicted": 3410.31,
+      "ci_low": 3235.0,
+      "ci_up": 3585.63,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-11",
+      "observed_price": 3300.0,
+      "stce_predicted": 3404.94,
+      "ci_low": 3225.08,
+      "ci_up": 3584.8,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-12",
+      "observed_price": 3350.0,
+      "stce_predicted": 3370.3,
+      "ci_low": 3200.31,
+      "ci_up": 3540.29,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-13",
+      "observed_price": 3400.0,
+      "stce_predicted": 3347.6,
+      "ci_low": 3182.57,
+      "ci_up": 3512.63,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-14",
+      "observed_price": 3842.0,
+      "stce_predicted": 3286.49,
+      "ci_low": 2986.32,
+      "ci_up": 3586.66,
+      "in_band": false
+    },
+    {
+      "date": "2016-07-15",
+      "observed_price": 3350.0,
+      "stce_predicted": 3780.44,
+      "ci_low": 3479.17,
+      "ci_up": 4081.71,
+      "in_band": false
+    },
+    {
+      "date": "2016-07-16",
+      "observed_price": 3275.0,
+      "stce_predicted": 3958.78,
+      "ci_low": 3651.79,
+      "ci_up": 4265.76,
+      "in_band": false
+    },
+    {
+      "date": "2016-07-17",
+      "observed_price": 3332.5,
+      "stce_predicted": 3520.21,
+      "ci_low": 3213.66,
+      "ci_up": 3826.75,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-18",
+      "observed_price": 3390.0,
+      "stce_predicted": 3377.48,
+      "ci_low": 3075.69,
+      "ci_up": 3679.28,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-19",
+      "observed_price": 3375.0,
+      "stce_predicted": 3465.28,
+      "ci_low": 3164.65,
+      "ci_up": 3765.91,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-20",
+      "observed_price": 3400.0,
+      "stce_predicted": 3482.1,
+      "ci_low": 3181.46,
+      "ci_up": 3782.73,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-21",
+      "observed_price": 3450.0,
+      "stce_predicted": 3490.88,
+      "ci_low": 3309.64,
+      "ci_up": 3672.11,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-22",
+      "observed_price": 3400.0,
+      "stce_predicted": 3626.69,
+      "ci_low": 3444.93,
+      "ci_up": 3808.45,
+      "in_band": false
+    },
+    {
+      "date": "2016-07-23",
+      "observed_price": 3400.0,
+      "stce_predicted": 3582.48,
+      "ci_low": 3419.51,
+      "ci_up": 3745.45,
+      "in_band": false
+    },
+    {
+      "date": "2016-07-24",
+      "observed_price": 3425.0,
+      "stce_predicted": 3547.21,
+      "ci_low": 3393.63,
+      "ci_up": 3700.78,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-25",
+      "observed_price": 3450.0,
+      "stce_predicted": 3523.9,
+      "ci_low": 3366.95,
+      "ci_up": 3680.85,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-26",
+      "observed_price": 3350.0,
+      "stce_predicted": 3599.58,
+      "ci_low": 3436.76,
+      "ci_up": 3762.41,
+      "in_band": false
+    },
+    {
+      "date": "2016-07-27",
+      "observed_price": 3400.0,
+      "stce_predicted": 3472.07,
+      "ci_low": 3309.24,
+      "ci_up": 3634.89,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-28",
+      "observed_price": 3450.0,
+      "stce_predicted": 3484.54,
+      "ci_low": 3321.71,
+      "ci_up": 3647.36,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-29",
+      "observed_price": 3400.0,
+      "stce_predicted": 3536.85,
+      "ci_low": 3374.02,
+      "ci_up": 3699.67,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-30",
+      "observed_price": 3400.0,
+      "stce_predicted": 3473.45,
+      "ci_low": 3310.62,
+      "ci_up": 3636.27,
+      "in_band": true
+    },
+    {
+      "date": "2016-07-31",
+      "observed_price": 3390.0,
+      "stce_predicted": 3444.15,
+      "ci_low": 3281.22,
+      "ci_up": 3607.08,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-01",
+      "observed_price": 3380.0,
+      "stce_predicted": 3442.88,
+      "ci_low": 3284.53,
+      "ci_up": 3601.23,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-02",
+      "observed_price": 3370.0,
+      "stce_predicted": 3416.78,
+      "ci_low": 3262.42,
+      "ci_up": 3571.13,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-03",
+      "observed_price": 3360.0,
+      "stce_predicted": 3339.22,
+      "ci_low": 3181.44,
+      "ci_up": 3496.99,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-04",
+      "observed_price": 3410.0,
+      "stce_predicted": 3316.18,
+      "ci_low": 3168.48,
+      "ci_up": 3463.88,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-05",
+      "observed_price": 3395.0,
+      "stce_predicted": 3383.4,
+      "ci_low": 3236.15,
+      "ci_up": 3530.65,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-06",
+      "observed_price": 3380.0,
+      "stce_predicted": 3380.65,
+      "ci_low": 3234.28,
+      "ci_up": 3527.03,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-07",
+      "observed_price": 3365.0,
+      "stce_predicted": 3364.25,
+      "ci_low": 3216.94,
+      "ci_up": 3511.56,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-08",
+      "observed_price": 3350.0,
+      "stce_predicted": 3357.82,
+      "ci_low": 3207.52,
+      "ci_up": 3508.12,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-09",
+      "observed_price": 3300.0,
+      "stce_predicted": 3385.72,
+      "ci_low": 3222.26,
+      "ci_up": 3549.17,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-10",
+      "observed_price": 3970.0,
+      "stce_predicted": 3158.98,
+      "ci_low": 2821.25,
+      "ci_up": 3496.7,
+      "in_band": false
+    },
+    {
+      "date": "2016-08-11",
+      "observed_price": 3800.0,
+      "stce_predicted": 3642.77,
+      "ci_low": 3275.85,
+      "ci_up": 4009.68,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-12",
+      "observed_price": 3450.0,
+      "stce_predicted": 3750.67,
+      "ci_low": 3386.56,
+      "ci_up": 4114.77,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-13",
+      "observed_price": 3420.0,
+      "stce_predicted": 3478.94,
+      "ci_low": 3117.58,
+      "ci_up": 3840.3,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-14",
+      "observed_price": 3413.33,
+      "stce_predicted": 3380.55,
+      "ci_low": 3023.04,
+      "ci_up": 3738.06,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-15",
+      "observed_price": 3406.67,
+      "stce_predicted": 3413.85,
+      "ci_low": 3061.56,
+      "ci_up": 3766.14,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-16",
+      "observed_price": 3400.0,
+      "stce_predicted": 3492.05,
+      "ci_low": 3151.79,
+      "ci_up": 3832.32,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-17",
+      "observed_price": 3400.0,
+      "stce_predicted": 3519.06,
+      "ci_low": 3256.59,
+      "ci_up": 3781.54,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-18",
+      "observed_price": 3370.0,
+      "stce_predicted": 3566.66,
+      "ci_low": 3413.43,
+      "ci_up": 3719.88,
+      "in_band": false
+    },
+    {
+      "date": "2016-08-19",
+      "observed_price": 3340.0,
+      "stce_predicted": 3547.13,
+      "ci_low": 3390.33,
+      "ci_up": 3703.93,
+      "in_band": false
+    },
+    {
+      "date": "2016-08-20",
+      "observed_price": 3310.0,
+      "stce_predicted": 3420.49,
+      "ci_low": 3253.96,
+      "ci_up": 3587.03,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-21",
+      "observed_price": 3280.0,
+      "stce_predicted": 3384.89,
+      "ci_low": 3208.97,
+      "ci_up": 3560.8,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-22",
+      "observed_price": 3250.0,
+      "stce_predicted": 3341.12,
+      "ci_low": 3157.2,
+      "ci_up": 3525.04,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-23",
+      "observed_price": 3300.0,
+      "stce_predicted": 3346.23,
+      "ci_low": 3168.08,
+      "ci_up": 3524.39,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-24",
+      "observed_price": 3295.0,
+      "stce_predicted": 3396.81,
+      "ci_low": 3230.14,
+      "ci_up": 3563.48,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-25",
+      "observed_price": 3247.5,
+      "stce_predicted": 3441.4,
+      "ci_low": 3280.32,
+      "ci_up": 3602.47,
+      "in_band": false
+    },
+    {
+      "date": "2016-08-26",
+      "observed_price": 3200.0,
+      "stce_predicted": 3375.87,
+      "ci_low": 3209.6,
+      "ci_up": 3542.13,
+      "in_band": false
+    },
+    {
+      "date": "2016-08-27",
+      "observed_price": 3145.0,
+      "stce_predicted": 3286.86,
+      "ci_low": 3105.23,
+      "ci_up": 3468.48,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-28",
+      "observed_price": 3122.5,
+      "stce_predicted": 3184.15,
+      "ci_low": 2990.26,
+      "ci_up": 3378.03,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-29",
+      "observed_price": 3100.0,
+      "stce_predicted": 3135.67,
+      "ci_low": 2930.86,
+      "ci_up": 3340.49,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-30",
+      "observed_price": 3100.0,
+      "stce_predicted": 3091.77,
+      "ci_low": 2891.79,
+      "ci_up": 3291.76,
+      "in_band": true
+    },
+    {
+      "date": "2016-08-31",
+      "observed_price": 3100.0,
+      "stce_predicted": 3056.64,
+      "ci_low": 2873.31,
+      "ci_up": 3239.97,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-01",
+      "observed_price": 3100.0,
+      "stce_predicted": 3063.58,
+      "ci_low": 2898.29,
+      "ci_up": 3228.87,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-02",
+      "observed_price": 3100.0,
+      "stce_predicted": 3074.66,
+      "ci_low": 2927.22,
+      "ci_up": 3222.1,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-03",
+      "observed_price": 3200.0,
+      "stce_predicted": 3059.5,
+      "ci_low": 2894.53,
+      "ci_up": 3224.47,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-04",
+      "observed_price": 3158.33,
+      "stce_predicted": 3153.09,
+      "ci_low": 2985.33,
+      "ci_up": 3320.85,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-05",
+      "observed_price": 3116.67,
+      "stce_predicted": 3199.76,
+      "ci_low": 3032.96,
+      "ci_up": 3366.56,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-06",
+      "observed_price": 3075.0,
+      "stce_predicted": 3200.32,
+      "ci_low": 3030.3,
+      "ci_up": 3370.35,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-07",
+      "observed_price": 3112.5,
+      "stce_predicted": 3124.35,
+      "ci_low": 2955.02,
+      "ci_up": 3293.67,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-08",
+      "observed_price": 3150.0,
+      "stce_predicted": 3128.59,
+      "ci_low": 2959.58,
+      "ci_up": 3297.6,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-09",
+      "observed_price": 3150.0,
+      "stce_predicted": 3168.43,
+      "ci_low": 3001.04,
+      "ci_up": 3335.81,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-10",
+      "observed_price": 3150.0,
+      "stce_predicted": 3199.97,
+      "ci_low": 3041.27,
+      "ci_up": 3358.66,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-11",
+      "observed_price": 3075.5,
+      "stce_predicted": 3210.79,
+      "ci_low": 3049.19,
+      "ci_up": 3372.39,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-12",
+      "observed_price": 3001.0,
+      "stce_predicted": 3181.62,
+      "ci_low": 3000.2,
+      "ci_up": 3363.05,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-13",
+      "observed_price": 2975.5,
+      "stce_predicted": 3102.6,
+      "ci_low": 2905.23,
+      "ci_up": 3299.97,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-14",
+      "observed_price": 2950.0,
+      "stce_predicted": 3010.05,
+      "ci_low": 2799.29,
+      "ci_up": 3220.82,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-15",
+      "observed_price": 3063.0,
+      "stce_predicted": 2942.14,
+      "ci_low": 2738.76,
+      "ci_up": 3145.53,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-16",
+      "observed_price": 3176.0,
+      "stce_predicted": 3017.1,
+      "ci_low": 2808.65,
+      "ci_up": 3225.56,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-17",
+      "observed_price": 3150.0,
+      "stce_predicted": 3175.24,
+      "ci_low": 2966.79,
+      "ci_up": 3383.7,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-18",
+      "observed_price": 3175.0,
+      "stce_predicted": 3200.43,
+      "ci_low": 2981.91,
+      "ci_up": 3418.95,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-19",
+      "observed_price": 3200.0,
+      "stce_predicted": 3191.25,
+      "ci_low": 2967.93,
+      "ci_up": 3414.57,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-20",
+      "observed_price": 3150.0,
+      "stce_predicted": 3258.02,
+      "ci_low": 3047.84,
+      "ci_up": 3468.21,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-21",
+      "observed_price": 3145.0,
+      "stce_predicted": 3207.1,
+      "ci_low": 3036.57,
+      "ci_up": 3377.63,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-22",
+      "observed_price": 3140.0,
+      "stce_predicted": 3180.17,
+      "ci_low": 3029.01,
+      "ci_up": 3331.33,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-23",
+      "observed_price": 3180.0,
+      "stce_predicted": 3169.61,
+      "ci_low": 3018.04,
+      "ci_up": 3321.19,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-24",
+      "observed_price": 3050.0,
+      "stce_predicted": 3247.37,
+      "ci_low": 3072.4,
+      "ci_up": 3422.35,
+      "in_band": false
+    },
+    {
+      "date": "2016-09-25",
+      "observed_price": 3062.5,
+      "stce_predicted": 3117.42,
+      "ci_low": 2935.49,
+      "ci_up": 3299.36,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-26",
+      "observed_price": 3075.0,
+      "stce_predicted": 3101.92,
+      "ci_low": 2924.82,
+      "ci_up": 3279.02,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-27",
+      "observed_price": 2975.0,
+      "stce_predicted": 3156.53,
+      "ci_low": 2962.36,
+      "ci_up": 3350.71,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-28",
+      "observed_price": 3017.5,
+      "stce_predicted": 3026.2,
+      "ci_low": 2832.22,
+      "ci_up": 3220.18,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-29",
+      "observed_price": 3060.0,
+      "stce_predicted": 2995.83,
+      "ci_low": 2808.0,
+      "ci_up": 3183.66,
+      "in_band": true
+    },
+    {
+      "date": "2016-09-30",
+      "observed_price": 2930.0,
+      "stce_predicted": 3068.36,
+      "ci_low": 2888.73,
+      "ci_up": 3247.99,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-01",
+      "observed_price": 2800.0,
+      "stce_predicted": 3015.81,
+      "ci_low": 2796.35,
+      "ci_up": 3235.28,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-02",
+      "observed_price": 2875.0,
+      "stce_predicted": 2804.76,
+      "ci_low": 2583.49,
+      "ci_up": 3026.03,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-03",
+      "observed_price": 2950.0,
+      "stce_predicted": 2868.82,
+      "ci_low": 2659.39,
+      "ci_up": 3078.26,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-04",
+      "observed_price": 3050.0,
+      "stce_predicted": 3002.24,
+      "ci_low": 2785.09,
+      "ci_up": 3219.4,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-05",
+      "observed_price": 2880.0,
+      "stce_predicted": 3032.99,
+      "ci_low": 2816.68,
+      "ci_up": 3249.3,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-06",
+      "observed_price": 2900.0,
+      "stce_predicted": 2920.93,
+      "ci_low": 2720.23,
+      "ci_up": 3121.63,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-07",
+      "observed_price": 2880.0,
+      "stce_predicted": 2904.85,
+      "ci_low": 2703.8,
+      "ci_up": 3105.89,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-08",
+      "observed_price": 2870.0,
+      "stce_predicted": 2858.26,
+      "ci_low": 2668.13,
+      "ci_up": 3048.4,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-09",
+      "observed_price": 2806.0,
+      "stce_predicted": 2902.92,
+      "ci_low": 2702.74,
+      "ci_up": 3103.09,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-10",
+      "observed_price": 2742.0,
+      "stce_predicted": 2881.92,
+      "ci_low": 2665.75,
+      "ci_up": 3098.09,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-11",
+      "observed_price": 2678.0,
+      "stce_predicted": 2827.41,
+      "ci_low": 2620.62,
+      "ci_up": 3034.21,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-12",
+      "observed_price": 2614.0,
+      "stce_predicted": 2732.72,
+      "ci_low": 2502.96,
+      "ci_up": 2962.48,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-13",
+      "observed_price": 2550.0,
+      "stce_predicted": 2606.41,
+      "ci_low": 2361.56,
+      "ci_up": 2851.26,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-14",
+      "observed_price": 2650.0,
+      "stce_predicted": 2503.01,
+      "ci_low": 2271.7,
+      "ci_up": 2734.33,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-15",
+      "observed_price": 2650.0,
+      "stce_predicted": 2544.27,
+      "ci_low": 2337.85,
+      "ci_up": 2750.68,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-16",
+      "observed_price": 2625.0,
+      "stce_predicted": 2553.42,
+      "ci_low": 2369.05,
+      "ci_up": 2737.8,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-17",
+      "observed_price": 2600.0,
+      "stce_predicted": 2560.12,
+      "ci_low": 2391.28,
+      "ci_up": 2728.97,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-18",
+      "observed_price": 2450.0,
+      "stce_predicted": 2541.51,
+      "ci_low": 2346.43,
+      "ci_up": 2736.59,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-19",
+      "observed_price": 2650.0,
+      "stce_predicted": 2396.45,
+      "ci_low": 2198.55,
+      "ci_up": 2594.34,
+      "in_band": false
+    },
+    {
+      "date": "2016-10-20",
+      "observed_price": 2715.0,
+      "stce_predicted": 2426.17,
+      "ci_low": 2220.67,
+      "ci_up": 2631.66,
+      "in_band": false
+    },
+    {
+      "date": "2016-10-21",
+      "observed_price": 2675.0,
+      "stce_predicted": 2589.97,
+      "ci_low": 2382.67,
+      "ci_up": 2797.28,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-22",
+      "observed_price": 2750.0,
+      "stce_predicted": 2628.25,
+      "ci_low": 2409.63,
+      "ci_up": 2846.88,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-23",
+      "observed_price": 2700.0,
+      "stce_predicted": 2679.75,
+      "ci_low": 2458.94,
+      "ci_up": 2900.55,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-24",
+      "observed_price": 2650.0,
+      "stce_predicted": 2699.55,
+      "ci_low": 2480.79,
+      "ci_up": 2918.32,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-25",
+      "observed_price": 2675.0,
+      "stce_predicted": 2621.3,
+      "ci_low": 2457.18,
+      "ci_up": 2785.42,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-26",
+      "observed_price": 2700.0,
+      "stce_predicted": 2625.64,
+      "ci_low": 2465.07,
+      "ci_up": 2786.2,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-27",
+      "observed_price": 2725.0,
+      "stce_predicted": 2685.72,
+      "ci_low": 2524.06,
+      "ci_up": 2847.38,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-28",
+      "observed_price": 2712.67,
+      "stce_predicted": 2734.31,
+      "ci_low": 2573.54,
+      "ci_up": 2895.08,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-29",
+      "observed_price": 2700.33,
+      "stce_predicted": 2739.12,
+      "ci_low": 2585.27,
+      "ci_up": 2892.97,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-30",
+      "observed_price": 2688.0,
+      "stce_predicted": 2752.78,
+      "ci_low": 2598.94,
+      "ci_up": 2906.62,
+      "in_band": true
+    },
+    {
+      "date": "2016-10-31",
+      "observed_price": 2675.67,
+      "stce_predicted": 2755.43,
+      "ci_low": 2607.22,
+      "ci_up": 2903.65,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-01",
+      "observed_price": 2663.33,
+      "stce_predicted": 2744.23,
+      "ci_low": 2593.69,
+      "ci_up": 2894.78,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-02",
+      "observed_price": 2651.0,
+      "stce_predicted": 2747.32,
+      "ci_low": 2591.9,
+      "ci_up": 2902.75,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-03",
+      "observed_price": 2750.0,
+      "stce_predicted": 2698.48,
+      "ci_low": 2537.13,
+      "ci_up": 2859.83,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-04",
+      "observed_price": 2775.0,
+      "stce_predicted": 2768.93,
+      "ci_low": 2596.37,
+      "ci_up": 2941.49,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-05",
+      "observed_price": 2775.0,
+      "stce_predicted": 2765.36,
+      "ci_low": 2585.69,
+      "ci_up": 2945.03,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-06",
+      "observed_price": 2712.5,
+      "stce_predicted": 2770.65,
+      "ci_low": 2591.85,
+      "ci_up": 2949.46,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-07",
+      "observed_price": 2650.0,
+      "stce_predicted": 2744.14,
+      "ci_low": 2561.85,
+      "ci_up": 2926.43,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-08",
+      "observed_price": 2670.0,
+      "stce_predicted": 2659.48,
+      "ci_low": 2477.98,
+      "ci_up": 2840.98,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-09",
+      "observed_price": 2696.67,
+      "stce_predicted": 2643.16,
+      "ci_low": 2466.97,
+      "ci_up": 2819.34,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-10",
+      "observed_price": 2723.33,
+      "stce_predicted": 2638.19,
+      "ci_low": 2463.64,
+      "ci_up": 2812.74,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-11",
+      "observed_price": 2750.0,
+      "stce_predicted": 2672.1,
+      "ci_low": 2501.58,
+      "ci_up": 2842.62,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-12",
+      "observed_price": 2736.0,
+      "stce_predicted": 2717.43,
+      "ci_low": 2553.81,
+      "ci_up": 2881.04,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-13",
+      "observed_price": 2730.67,
+      "stce_predicted": 2783.9,
+      "ci_low": 2619.19,
+      "ci_up": 2948.61,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-14",
+      "observed_price": 2725.33,
+      "stce_predicted": 2774.41,
+      "ci_low": 2618.74,
+      "ci_up": 2930.07,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-15",
+      "observed_price": 2720.0,
+      "stce_predicted": 2788.78,
+      "ci_low": 2642.56,
+      "ci_up": 2935.01,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-16",
+      "observed_price": 2820.0,
+      "stce_predicted": 2762.19,
+      "ci_low": 2599.19,
+      "ci_up": 2925.19,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-17",
+      "observed_price": 2780.0,
+      "stce_predicted": 2831.14,
+      "ci_low": 2667.19,
+      "ci_up": 2995.09,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-18",
+      "observed_price": 2875.0,
+      "stce_predicted": 2823.05,
+      "ci_low": 2638.81,
+      "ci_up": 3007.28,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-19",
+      "observed_price": 2850.0,
+      "stce_predicted": 2889.61,
+      "ci_low": 2701.14,
+      "ci_up": 3078.08,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-20",
+      "observed_price": 2862.5,
+      "stce_predicted": 2896.38,
+      "ci_low": 2707.5,
+      "ci_up": 3085.25,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-21",
+      "observed_price": 2875.0,
+      "stce_predicted": 2899.62,
+      "ci_low": 2716.31,
+      "ci_up": 3082.94,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-22",
+      "observed_price": 2850.0,
+      "stce_predicted": 2933.07,
+      "ci_low": 2770.92,
+      "ci_up": 3095.21,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-23",
+      "observed_price": 2840.0,
+      "stce_predicted": 2949.66,
+      "ci_low": 2788.95,
+      "ci_up": 3110.37,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-24",
+      "observed_price": 2991.0,
+      "stce_predicted": 2879.33,
+      "ci_low": 2701.53,
+      "ci_up": 3057.13,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-25",
+      "observed_price": 2950.0,
+      "stce_predicted": 2989.63,
+      "ci_low": 2805.85,
+      "ci_up": 3173.41,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-26",
+      "observed_price": 2900.0,
+      "stce_predicted": 3009.61,
+      "ci_low": 2828.04,
+      "ci_up": 3191.19,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-27",
+      "observed_price": 2900.0,
+      "stce_predicted": 2989.24,
+      "ci_low": 2809.38,
+      "ci_up": 3169.1,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-28",
+      "observed_price": 2900.0,
+      "stce_predicted": 2979.27,
+      "ci_low": 2800.47,
+      "ci_up": 3158.08,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-29",
+      "observed_price": 2915.0,
+      "stce_predicted": 2978.5,
+      "ci_low": 2804.84,
+      "ci_up": 3152.16,
+      "in_band": true
+    },
+    {
+      "date": "2016-11-30",
+      "observed_price": 2930.0,
+      "stce_predicted": 2945.36,
+      "ci_low": 2783.31,
+      "ci_up": 3107.42,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-01",
+      "observed_price": 2940.0,
+      "stce_predicted": 2944.39,
+      "ci_low": 2794.09,
+      "ci_up": 3094.69,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-02",
+      "observed_price": 2950.0,
+      "stce_predicted": 2979.28,
+      "ci_low": 2828.98,
+      "ci_up": 3129.58,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-03",
+      "observed_price": 2930.0,
+      "stce_predicted": 2995.01,
+      "ci_low": 2846.14,
+      "ci_up": 3143.88,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-04",
+      "observed_price": 2865.0,
+      "stce_predicted": 2991.82,
+      "ci_low": 2834.57,
+      "ci_up": 3149.06,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-05",
+      "observed_price": 2800.0,
+      "stce_predicted": 2966.54,
+      "ci_low": 2787.07,
+      "ci_up": 3146.01,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-06",
+      "observed_price": 2875.0,
+      "stce_predicted": 2891.45,
+      "ci_low": 2711.27,
+      "ci_up": 3071.63,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-07",
+      "observed_price": 2875.0,
+      "stce_predicted": 2852.8,
+      "ci_low": 2673.82,
+      "ci_up": 3031.79,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-08",
+      "observed_price": 2837.5,
+      "stce_predicted": 2904.71,
+      "ci_low": 2727.29,
+      "ci_up": 3082.13,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-09",
+      "observed_price": 2800.0,
+      "stce_predicted": 2870.06,
+      "ci_low": 2697.05,
+      "ci_up": 3043.07,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-10",
+      "observed_price": 2820.0,
+      "stce_predicted": 2829.59,
+      "ci_low": 2668.18,
+      "ci_up": 2991.01,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-11",
+      "observed_price": 2830.0,
+      "stce_predicted": 2858.75,
+      "ci_low": 2699.12,
+      "ci_up": 3018.38,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-12",
+      "observed_price": 2840.0,
+      "stce_predicted": 2877.12,
+      "ci_low": 2720.89,
+      "ci_up": 3033.36,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-13",
+      "observed_price": 2850.0,
+      "stce_predicted": 2902.94,
+      "ci_low": 2750.29,
+      "ci_up": 3055.59,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-14",
+      "observed_price": 2825.0,
+      "stce_predicted": 2922.33,
+      "ci_low": 2776.24,
+      "ci_up": 3068.42,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-15",
+      "observed_price": 2857.0,
+      "stce_predicted": 2919.87,
+      "ci_low": 2771.0,
+      "ci_up": 3068.73,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-16",
+      "observed_price": 2825.0,
+      "stce_predicted": 2930.75,
+      "ci_low": 2786.57,
+      "ci_up": 3074.92,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-17",
+      "observed_price": 2800.0,
+      "stce_predicted": 2889.07,
+      "ci_low": 2740.58,
+      "ci_up": 3037.56,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-18",
+      "observed_price": 2800.0,
+      "stce_predicted": 2872.65,
+      "ci_low": 2720.87,
+      "ci_up": 3024.43,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-19",
+      "observed_price": 2800.0,
+      "stce_predicted": 2881.6,
+      "ci_low": 2728.47,
+      "ci_up": 3034.74,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-20",
+      "observed_price": 2801.0,
+      "stce_predicted": 2886.78,
+      "ci_low": 2735.74,
+      "ci_up": 3037.82,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-21",
+      "observed_price": 2800.0,
+      "stce_predicted": 2862.82,
+      "ci_low": 2711.58,
+      "ci_up": 3014.05,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-22",
+      "observed_price": 2800.0,
+      "stce_predicted": 2833.9,
+      "ci_low": 2693.88,
+      "ci_up": 2973.92,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-23",
+      "observed_price": 2650.0,
+      "stce_predicted": 2905.97,
+      "ci_low": 2723.65,
+      "ci_up": 3088.28,
+      "in_band": false
+    },
+    {
+      "date": "2016-12-24",
+      "observed_price": 2750.0,
+      "stce_predicted": 2775.49,
+      "ci_low": 2593.16,
+      "ci_up": 2957.83,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-25",
+      "observed_price": 2750.5,
+      "stce_predicted": 2802.39,
+      "ci_low": 2621.0,
+      "ci_up": 2983.78,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-26",
+      "observed_price": 2751.0,
+      "stce_predicted": 2842.65,
+      "ci_low": 2663.2,
+      "ci_up": 3022.11,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-27",
+      "observed_price": 2800.5,
+      "stce_predicted": 2829.05,
+      "ci_low": 2649.65,
+      "ci_up": 3008.44,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-28",
+      "observed_price": 2850.0,
+      "stce_predicted": 2833.77,
+      "ci_low": 2646.18,
+      "ci_up": 3021.37,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-29",
+      "observed_price": 2835.0,
+      "stce_predicted": 2882.47,
+      "ci_low": 2690.83,
+      "ci_up": 3074.11,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-30",
+      "observed_price": 2820.0,
+      "stce_predicted": 2894.74,
+      "ci_low": 2724.5,
+      "ci_up": 3064.97,
+      "in_band": true
+    },
+    {
+      "date": "2016-12-31",
+      "observed_price": 2850.0,
+      "stce_predicted": 2885.08,
+      "ci_low": 2715.19,
+      "ci_up": 3054.97,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-01",
+      "observed_price": 2850.0,
+      "stce_predicted": 2901.74,
+      "ci_low": 2737.44,
+      "ci_up": 3066.03,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-02",
+      "observed_price": 2850.0,
+      "stce_predicted": 2898.75,
+      "ci_low": 2749.64,
+      "ci_up": 3047.86,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-03",
+      "observed_price": 2850.0,
+      "stce_predicted": 2900.58,
+      "ci_low": 2758.41,
+      "ci_up": 3042.75,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-04",
+      "observed_price": 2820.0,
+      "stce_predicted": 2863.56,
+      "ci_low": 2719.19,
+      "ci_up": 3007.93,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-05",
+      "observed_price": 2810.0,
+      "stce_predicted": 2836.63,
+      "ci_low": 2688.81,
+      "ci_up": 2984.44,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-06",
+      "observed_price": 2800.0,
+      "stce_predicted": 2817.06,
+      "ci_low": 2665.65,
+      "ci_up": 2968.47,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-07",
+      "observed_price": 2825.0,
+      "stce_predicted": 2782.87,
+      "ci_low": 2632.57,
+      "ci_up": 2933.17,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-08",
+      "observed_price": 2822.5,
+      "stce_predicted": 2800.48,
+      "ci_low": 2652.02,
+      "ci_up": 2948.93,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-09",
+      "observed_price": 2820.0,
+      "stce_predicted": 2826.0,
+      "ci_low": 2680.62,
+      "ci_up": 2971.39,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-10",
+      "observed_price": 2800.0,
+      "stce_predicted": 2831.6,
+      "ci_low": 2690.51,
+      "ci_up": 2972.69,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-11",
+      "observed_price": 2800.0,
+      "stce_predicted": 2807.68,
+      "ci_low": 2665.91,
+      "ci_up": 2949.45,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-12",
+      "observed_price": 2850.0,
+      "stce_predicted": 2794.65,
+      "ci_low": 2646.48,
+      "ci_up": 2942.83,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-13",
+      "observed_price": 2850.0,
+      "stce_predicted": 2815.73,
+      "ci_low": 2665.79,
+      "ci_up": 2965.68,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-14",
+      "observed_price": 2850.0,
+      "stce_predicted": 2866.24,
+      "ci_low": 2714.27,
+      "ci_up": 3018.22,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-15",
+      "observed_price": 2850.0,
+      "stce_predicted": 2863.67,
+      "ci_low": 2710.51,
+      "ci_up": 3016.83,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-16",
+      "observed_price": 2850.0,
+      "stce_predicted": 2859.86,
+      "ci_low": 2706.44,
+      "ci_up": 3013.28,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-17",
+      "observed_price": 2875.0,
+      "stce_predicted": 2857.21,
+      "ci_low": 2705.49,
+      "ci_up": 3008.93,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-18",
+      "observed_price": 2900.0,
+      "stce_predicted": 2869.93,
+      "ci_low": 2720.74,
+      "ci_up": 3019.13,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-19",
+      "observed_price": 2875.0,
+      "stce_predicted": 2900.77,
+      "ci_low": 2751.57,
+      "ci_up": 3049.97,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-20",
+      "observed_price": 2851.0,
+      "stce_predicted": 2881.84,
+      "ci_low": 2732.75,
+      "ci_up": 3030.93,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-21",
+      "observed_price": 2850.0,
+      "stce_predicted": 2866.43,
+      "ci_low": 2717.33,
+      "ci_up": 3015.52,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-22",
+      "observed_price": 2831.25,
+      "stce_predicted": 2896.69,
+      "ci_low": 2744.64,
+      "ci_up": 3048.74,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-23",
+      "observed_price": 2812.5,
+      "stce_predicted": 2865.81,
+      "ci_low": 2707.83,
+      "ci_up": 3023.79,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-24",
+      "observed_price": 2793.75,
+      "stce_predicted": 2844.77,
+      "ci_low": 2680.82,
+      "ci_up": 3008.72,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-25",
+      "observed_price": 2775.0,
+      "stce_predicted": 2798.28,
+      "ci_low": 2635.19,
+      "ci_up": 2961.38,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-26",
+      "observed_price": 2766.67,
+      "stce_predicted": 2761.06,
+      "ci_low": 2598.73,
+      "ci_up": 2923.39,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-27",
+      "observed_price": 2758.33,
+      "stce_predicted": 2750.34,
+      "ci_low": 2587.95,
+      "ci_up": 2912.74,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-28",
+      "observed_price": 2750.0,
+      "stce_predicted": 2751.69,
+      "ci_low": 2593.43,
+      "ci_up": 2909.95,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-29",
+      "observed_price": 2712.5,
+      "stce_predicted": 2764.8,
+      "ci_low": 2604.5,
+      "ci_up": 2925.1,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-30",
+      "observed_price": 2675.0,
+      "stce_predicted": 2740.48,
+      "ci_low": 2572.64,
+      "ci_up": 2908.33,
+      "in_band": true
+    },
+    {
+      "date": "2017-01-31",
+      "observed_price": 2750.0,
+      "stce_predicted": 2673.77,
+      "ci_low": 2510.68,
+      "ci_up": 2836.86,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-01",
+      "observed_price": 2700.0,
+      "stce_predicted": 2684.19,
+      "ci_low": 2521.67,
+      "ci_up": 2846.71,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-02",
+      "observed_price": 2840.0,
+      "stce_predicted": 2636.59,
+      "ci_low": 2457.27,
+      "ci_up": 2815.91,
+      "in_band": false
+    },
+    {
+      "date": "2017-02-03",
+      "observed_price": 2850.0,
+      "stce_predicted": 2697.73,
+      "ci_low": 2505.62,
+      "ci_up": 2889.84,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-04",
+      "observed_price": 2850.0,
+      "stce_predicted": 2776.36,
+      "ci_low": 2576.22,
+      "ci_up": 2976.49,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-05",
+      "observed_price": 2810.0,
+      "stce_predicted": 2782.12,
+      "ci_low": 2584.67,
+      "ci_up": 2979.57,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-06",
+      "observed_price": 2770.0,
+      "stce_predicted": 2782.6,
+      "ci_low": 2599.45,
+      "ci_up": 2965.75,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-07",
+      "observed_price": 2810.0,
+      "stce_predicted": 2749.89,
+      "ci_low": 2569.93,
+      "ci_up": 2929.85,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-08",
+      "observed_price": 2850.0,
+      "stce_predicted": 2756.11,
+      "ci_low": 2597.27,
+      "ci_up": 2914.95,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-09",
+      "observed_price": 2850.0,
+      "stce_predicted": 2806.15,
+      "ci_low": 2646.41,
+      "ci_up": 2965.89,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-10",
+      "observed_price": 2850.0,
+      "stce_predicted": 2824.51,
+      "ci_low": 2664.77,
+      "ci_up": 2984.24,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-11",
+      "observed_price": 2850.0,
+      "stce_predicted": 2825.97,
+      "ci_low": 2666.23,
+      "ci_up": 2985.71,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-12",
+      "observed_price": 2860.0,
+      "stce_predicted": 2827.57,
+      "ci_low": 2666.84,
+      "ci_up": 2988.3,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-13",
+      "observed_price": 2870.0,
+      "stce_predicted": 2831.37,
+      "ci_low": 2683.09,
+      "ci_up": 2979.65,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-14",
+      "observed_price": 2780.0,
+      "stce_predicted": 2872.29,
+      "ci_low": 2714.44,
+      "ci_up": 3030.14,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-15",
+      "observed_price": 2790.0,
+      "stce_predicted": 2785.55,
+      "ci_low": 2622.2,
+      "ci_up": 2948.91,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-16",
+      "observed_price": 2850.0,
+      "stce_predicted": 2759.68,
+      "ci_low": 2596.33,
+      "ci_up": 2923.04,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-17",
+      "observed_price": 2800.0,
+      "stce_predicted": 2827.03,
+      "ci_low": 2662.21,
+      "ci_up": 2991.84,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-18",
+      "observed_price": 2750.0,
+      "stce_predicted": 2800.32,
+      "ci_low": 2627.81,
+      "ci_up": 2972.83,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-19",
+      "observed_price": 2750.0,
+      "stce_predicted": 2720.81,
+      "ci_low": 2547.8,
+      "ci_up": 2893.83,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-20",
+      "observed_price": 2750.0,
+      "stce_predicted": 2724.71,
+      "ci_low": 2560.3,
+      "ci_up": 2889.12,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-21",
+      "observed_price": 2720.0,
+      "stce_predicted": 2754.49,
+      "ci_low": 2584.03,
+      "ci_up": 2924.95,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-22",
+      "observed_price": 2690.0,
+      "stce_predicted": 2681.25,
+      "ci_low": 2502.81,
+      "ci_up": 2859.69,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-23",
+      "observed_price": 2775.0,
+      "stce_predicted": 2565.24,
+      "ci_low": 2401.84,
+      "ci_up": 2728.64,
+      "in_band": false
+    },
+    {
+      "date": "2017-02-24",
+      "observed_price": 2751.5,
+      "stce_predicted": 2678.7,
+      "ci_low": 2522.47,
+      "ci_up": 2834.93,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-25",
+      "observed_price": 2728.0,
+      "stce_predicted": 2706.59,
+      "ci_low": 2550.32,
+      "ci_up": 2862.86,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-26",
+      "observed_price": 2726.67,
+      "stce_predicted": 2688.43,
+      "ci_low": 2532.44,
+      "ci_up": 2844.41,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-27",
+      "observed_price": 2725.33,
+      "stce_predicted": 2681.59,
+      "ci_low": 2526.28,
+      "ci_up": 2836.9,
+      "in_band": true
+    },
+    {
+      "date": "2017-02-28",
+      "observed_price": 2724.0,
+      "stce_predicted": 2683.91,
+      "ci_low": 2528.81,
+      "ci_up": 2839.01,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-01",
+      "observed_price": 2790.0,
+      "stce_predicted": 2639.98,
+      "ci_low": 2484.12,
+      "ci_up": 2795.84,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-02",
+      "observed_price": 2785.0,
+      "stce_predicted": 2714.57,
+      "ci_low": 2556.94,
+      "ci_up": 2872.2,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-03",
+      "observed_price": 2775.0,
+      "stce_predicted": 2716.61,
+      "ci_low": 2557.3,
+      "ci_up": 2875.91,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-04",
+      "observed_price": 2775.0,
+      "stce_predicted": 2687.54,
+      "ci_low": 2528.79,
+      "ci_up": 2846.29,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-05",
+      "observed_price": 2782.5,
+      "stce_predicted": 2692.2,
+      "ci_low": 2535.35,
+      "ci_up": 2849.05,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-06",
+      "observed_price": 2790.0,
+      "stce_predicted": 2727.76,
+      "ci_low": 2575.49,
+      "ci_up": 2880.03,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-07",
+      "observed_price": 2750.0,
+      "stce_predicted": 2759.8,
+      "ci_low": 2615.75,
+      "ci_up": 2903.84,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-08",
+      "observed_price": 2740.0,
+      "stce_predicted": 2711.91,
+      "ci_low": 2563.48,
+      "ci_up": 2860.34,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-09",
+      "observed_price": 2760.0,
+      "stce_predicted": 2679.88,
+      "ci_low": 2532.1,
+      "ci_up": 2827.66,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-10",
+      "observed_price": 2780.0,
+      "stce_predicted": 2692.61,
+      "ci_low": 2544.44,
+      "ci_up": 2840.79,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-11",
+      "observed_price": 2740.0,
+      "stce_predicted": 2737.91,
+      "ci_low": 2587.56,
+      "ci_up": 2888.25,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-12",
+      "observed_price": 2742.5,
+      "stce_predicted": 2705.05,
+      "ci_low": 2555.33,
+      "ci_up": 2854.77,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-13",
+      "observed_price": 2745.0,
+      "stce_predicted": 2701.95,
+      "ci_low": 2557.31,
+      "ci_up": 2846.59,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-14",
+      "observed_price": 2747.5,
+      "stce_predicted": 2706.54,
+      "ci_low": 2561.85,
+      "ci_up": 2851.24,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-15",
+      "observed_price": 2750.0,
+      "stce_predicted": 2695.24,
+      "ci_low": 2551.21,
+      "ci_up": 2839.26,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-16",
+      "observed_price": 2780.0,
+      "stce_predicted": 2681.7,
+      "ci_low": 2534.55,
+      "ci_up": 2828.86,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-17",
+      "observed_price": 2770.0,
+      "stce_predicted": 2663.56,
+      "ci_low": 2518.3,
+      "ci_up": 2808.83,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-18",
+      "observed_price": 2760.0,
+      "stce_predicted": 2698.44,
+      "ci_low": 2554.19,
+      "ci_up": 2842.69,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-19",
+      "observed_price": 2762.5,
+      "stce_predicted": 2698.08,
+      "ci_low": 2555.01,
+      "ci_up": 2841.15,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-20",
+      "observed_price": 2765.0,
+      "stce_predicted": 2696.95,
+      "ci_low": 2555.3,
+      "ci_up": 2838.6,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-21",
+      "observed_price": 2775.0,
+      "stce_predicted": 2690.94,
+      "ci_low": 2550.39,
+      "ci_up": 2831.48,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-22",
+      "observed_price": 2740.0,
+      "stce_predicted": 2716.01,
+      "ci_low": 2572.81,
+      "ci_up": 2859.2,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-23",
+      "observed_price": 2750.0,
+      "stce_predicted": 2659.33,
+      "ci_low": 2517.03,
+      "ci_up": 2801.62,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-24",
+      "observed_price": 2750.0,
+      "stce_predicted": 2716.55,
+      "ci_low": 2574.52,
+      "ci_up": 2858.57,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-25",
+      "observed_price": 2735.0,
+      "stce_predicted": 2697.44,
+      "ci_low": 2553.06,
+      "ci_up": 2841.83,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-26",
+      "observed_price": 2757.5,
+      "stce_predicted": 2682.42,
+      "ci_low": 2538.37,
+      "ci_up": 2826.46,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-27",
+      "observed_price": 2780.0,
+      "stce_predicted": 2698.96,
+      "ci_low": 2552.27,
+      "ci_up": 2845.64,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-28",
+      "observed_price": 2770.0,
+      "stce_predicted": 2721.01,
+      "ci_low": 2575.11,
+      "ci_up": 2866.9,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-29",
+      "observed_price": 2760.0,
+      "stce_predicted": 2724.4,
+      "ci_low": 2579.69,
+      "ci_up": 2869.11,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-30",
+      "observed_price": 2750.0,
+      "stce_predicted": 2707.87,
+      "ci_low": 2563.16,
+      "ci_up": 2852.59,
+      "in_band": true
+    },
+    {
+      "date": "2017-03-31",
+      "observed_price": 2775.0,
+      "stce_predicted": 2696.2,
+      "ci_low": 2550.69,
+      "ci_up": 2841.7,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-01",
+      "observed_price": 2750.0,
+      "stce_predicted": 2770.02,
+      "ci_low": 2627.7,
+      "ci_up": 2912.33,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-02",
+      "observed_price": 2762.5,
+      "stce_predicted": 2737.76,
+      "ci_low": 2595.67,
+      "ci_up": 2879.85,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-03",
+      "observed_price": 2775.0,
+      "stce_predicted": 2717.78,
+      "ci_low": 2576.62,
+      "ci_up": 2858.95,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-04",
+      "observed_price": 2761.0,
+      "stce_predicted": 2722.19,
+      "ci_low": 2581.39,
+      "ci_up": 2862.98,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-05",
+      "observed_price": 2775.5,
+      "stce_predicted": 2705.45,
+      "ci_low": 2563.65,
+      "ci_up": 2847.24,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-06",
+      "observed_price": 2790.0,
+      "stce_predicted": 2710.49,
+      "ci_low": 2567.23,
+      "ci_up": 2853.75,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-07",
+      "observed_price": 2775.0,
+      "stce_predicted": 2735.97,
+      "ci_low": 2592.71,
+      "ci_up": 2879.23,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-08",
+      "observed_price": 2776.0,
+      "stce_predicted": 2715.08,
+      "ci_low": 2574.79,
+      "ci_up": 2855.37,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-09",
+      "observed_price": 2788.0,
+      "stce_predicted": 2724.3,
+      "ci_low": 2584.06,
+      "ci_up": 2864.54,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-10",
+      "observed_price": 2800.0,
+      "stce_predicted": 2753.48,
+      "ci_low": 2610.42,
+      "ci_up": 2896.53,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-11",
+      "observed_price": 2750.0,
+      "stce_predicted": 2779.03,
+      "ci_low": 2633.18,
+      "ci_up": 2924.88,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-12",
+      "observed_price": 2780.0,
+      "stce_predicted": 2700.98,
+      "ci_low": 2555.21,
+      "ci_up": 2846.75,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-13",
+      "observed_price": 2770.0,
+      "stce_predicted": 2707.82,
+      "ci_low": 2562.34,
+      "ci_up": 2853.29,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-14",
+      "observed_price": 2835.0,
+      "stce_predicted": 2709.18,
+      "ci_low": 2553.67,
+      "ci_up": 2864.68,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-15",
+      "observed_price": 2900.0,
+      "stce_predicted": 2934.19,
+      "ci_low": 2757.77,
+      "ci_up": 3110.61,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-16",
+      "observed_price": 2885.0,
+      "stce_predicted": 3310.65,
+      "ci_low": 3127.22,
+      "ci_up": 3494.09,
+      "in_band": false
+    },
+    {
+      "date": "2017-04-17",
+      "observed_price": 2870.0,
+      "stce_predicted": 3214.52,
+      "ci_low": 3028.82,
+      "ci_up": 3400.22,
+      "in_band": false
+    },
+    {
+      "date": "2017-04-18",
+      "observed_price": 2850.0,
+      "stce_predicted": 2907.75,
+      "ci_low": 2731.27,
+      "ci_up": 3084.24,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-19",
+      "observed_price": 2870.0,
+      "stce_predicted": 2733.53,
+      "ci_low": 2563.63,
+      "ci_up": 2903.44,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-20",
+      "observed_price": 2890.0,
+      "stce_predicted": 2748.76,
+      "ci_low": 2596.71,
+      "ci_up": 2900.8,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-21",
+      "observed_price": 2850.0,
+      "stce_predicted": 2810.17,
+      "ci_low": 2661.3,
+      "ci_up": 2959.04,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-22",
+      "observed_price": 2856.67,
+      "stce_predicted": 2793.29,
+      "ci_low": 2647.28,
+      "ci_up": 2939.3,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-23",
+      "observed_price": 2863.33,
+      "stce_predicted": 2784.71,
+      "ci_low": 2640.48,
+      "ci_up": 2928.93,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-24",
+      "observed_price": 2870.0,
+      "stce_predicted": 2788.01,
+      "ci_low": 2643.79,
+      "ci_up": 2932.24,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-25",
+      "observed_price": 2841.0,
+      "stce_predicted": 2797.28,
+      "ci_low": 2651.43,
+      "ci_up": 2943.12,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-26",
+      "observed_price": 2858.0,
+      "stce_predicted": 2727.54,
+      "ci_low": 2581.9,
+      "ci_up": 2873.17,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-27",
+      "observed_price": 2875.0,
+      "stce_predicted": 2734.39,
+      "ci_low": 2592.4,
+      "ci_up": 2876.38,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-28",
+      "observed_price": 2875.0,
+      "stce_predicted": 2768.93,
+      "ci_low": 2626.45,
+      "ci_up": 2911.41,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-29",
+      "observed_price": 2851.25,
+      "stce_predicted": 2796.85,
+      "ci_low": 2653.83,
+      "ci_up": 2939.87,
+      "in_band": true
+    },
+    {
+      "date": "2017-04-30",
+      "observed_price": 2827.5,
+      "stce_predicted": 2809.87,
+      "ci_low": 2662.03,
+      "ci_up": 2957.71,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-01",
+      "observed_price": 2803.75,
+      "stce_predicted": 2796.58,
+      "ci_low": 2641.91,
+      "ci_up": 2951.25,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-02",
+      "observed_price": 2780.0,
+      "stce_predicted": 2754.97,
+      "ci_low": 2590.82,
+      "ci_up": 2919.13,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-03",
+      "observed_price": 2800.0,
+      "stce_predicted": 2687.18,
+      "ci_low": 2521.75,
+      "ci_up": 2852.62,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-04",
+      "observed_price": 2830.0,
+      "stce_predicted": 2679.95,
+      "ci_low": 2519.35,
+      "ci_up": 2840.55,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-05",
+      "observed_price": 2775.0,
+      "stce_predicted": 2720.5,
+      "ci_low": 2563.96,
+      "ci_up": 2877.05,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-06",
+      "observed_price": 2725.0,
+      "stce_predicted": 2719.9,
+      "ci_low": 2556.01,
+      "ci_up": 2883.78,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-07",
+      "observed_price": 2725.0,
+      "stce_predicted": 2660.54,
+      "ci_low": 2493.43,
+      "ci_up": 2827.66,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-08",
+      "observed_price": 2725.0,
+      "stce_predicted": 2663.04,
+      "ci_low": 2493.93,
+      "ci_up": 2832.16,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-09",
+      "observed_price": 2763.67,
+      "stce_predicted": 2643.71,
+      "ci_low": 2475.02,
+      "ci_up": 2812.4,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-10",
+      "observed_price": 2802.33,
+      "stce_predicted": 2649.76,
+      "ci_low": 2480.76,
+      "ci_up": 2818.77,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-11",
+      "observed_price": 2841.0,
+      "stce_predicted": 2668.99,
+      "ci_low": 2497.3,
+      "ci_up": 2840.68,
+      "in_band": false
+    },
+    {
+      "date": "2017-05-12",
+      "observed_price": 2761.0,
+      "stce_predicted": 2729.5,
+      "ci_low": 2557.99,
+      "ci_up": 2901.01,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-13",
+      "observed_price": 2860.0,
+      "stce_predicted": 2625.02,
+      "ci_low": 2445.5,
+      "ci_up": 2804.53,
+      "in_band": false
+    },
+    {
+      "date": "2017-05-14",
+      "observed_price": 2845.0,
+      "stce_predicted": 2714.7,
+      "ci_low": 2537.28,
+      "ci_up": 2892.13,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-15",
+      "observed_price": 2830.0,
+      "stce_predicted": 2763.07,
+      "ci_low": 2595.84,
+      "ci_up": 2930.31,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-16",
+      "observed_price": 2815.0,
+      "stce_predicted": 2740.72,
+      "ci_low": 2579.57,
+      "ci_up": 2901.86,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-17",
+      "observed_price": 2800.0,
+      "stce_predicted": 2712.59,
+      "ci_low": 2551.22,
+      "ci_up": 2873.95,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-18",
+      "observed_price": 2815.0,
+      "stce_predicted": 2670.67,
+      "ci_low": 2510.27,
+      "ci_up": 2831.07,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-19",
+      "observed_price": 2770.0,
+      "stce_predicted": 2716.25,
+      "ci_low": 2558.15,
+      "ci_up": 2874.35,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-20",
+      "observed_price": 2750.0,
+      "stce_predicted": 2669.52,
+      "ci_low": 2508.08,
+      "ci_up": 2830.96,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-21",
+      "observed_price": 2766.67,
+      "stce_predicted": 2692.87,
+      "ci_low": 2534.31,
+      "ci_up": 2851.43,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-22",
+      "observed_price": 2783.33,
+      "stce_predicted": 2697.48,
+      "ci_low": 2543.35,
+      "ci_up": 2851.62,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-23",
+      "observed_price": 2800.0,
+      "stce_predicted": 2676.52,
+      "ci_low": 2524.51,
+      "ci_up": 2828.53,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-24",
+      "observed_price": 2750.0,
+      "stce_predicted": 2678.56,
+      "ci_low": 2524.98,
+      "ci_up": 2832.14,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-25",
+      "observed_price": 2712.5,
+      "stce_predicted": 2697.08,
+      "ci_low": 2540.39,
+      "ci_up": 2853.76,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-26",
+      "observed_price": 2675.0,
+      "stce_predicted": 2592.01,
+      "ci_low": 2422.32,
+      "ci_up": 2761.7,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-27",
+      "observed_price": 2660.0,
+      "stce_predicted": 2461.61,
+      "ci_low": 2281.72,
+      "ci_up": 2641.49,
+      "in_band": false
+    },
+    {
+      "date": "2017-05-28",
+      "observed_price": 2680.0,
+      "stce_predicted": 2473.9,
+      "ci_low": 2292.65,
+      "ci_up": 2655.16,
+      "in_band": false
+    },
+    {
+      "date": "2017-05-29",
+      "observed_price": 2700.0,
+      "stce_predicted": 2810.88,
+      "ci_low": 2635.47,
+      "ci_up": 2986.3,
+      "in_band": true
+    },
+    {
+      "date": "2017-05-30",
+      "observed_price": 2650.0,
+      "stce_predicted": 3249.96,
+      "ci_low": 3087.76,
+      "ci_up": 3412.16,
+      "in_band": false
+    },
+    {
+      "date": "2017-05-31",
+      "observed_price": 2600.0,
+      "stce_predicted": 2823.68,
+      "ci_low": 2659.01,
+      "ci_up": 2988.34,
+      "in_band": false
+    },
+    {
+      "date": "2017-06-01",
+      "observed_price": 2550.0,
+      "stce_predicted": 2392.0,
+      "ci_low": 2213.61,
+      "ci_up": 2570.39,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-02",
+      "observed_price": 2650.0,
+      "stce_predicted": 2315.86,
+      "ci_low": 2138.86,
+      "ci_up": 2492.86,
+      "in_band": false
+    },
+    {
+      "date": "2017-06-03",
+      "observed_price": 2650.0,
+      "stce_predicted": 2390.16,
+      "ci_low": 2213.58,
+      "ci_up": 2566.74,
+      "in_band": false
+    },
+    {
+      "date": "2017-06-04",
+      "observed_price": 2650.0,
+      "stce_predicted": 2455.61,
+      "ci_low": 2281.51,
+      "ci_up": 2629.71,
+      "in_band": false
+    },
+    {
+      "date": "2017-06-05",
+      "observed_price": 2650.0,
+      "stce_predicted": 2491.29,
+      "ci_low": 2324.52,
+      "ci_up": 2658.05,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-06",
+      "observed_price": 2650.0,
+      "stce_predicted": 2490.67,
+      "ci_low": 2323.91,
+      "ci_up": 2657.43,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-07",
+      "observed_price": 2650.0,
+      "stce_predicted": 2504.06,
+      "ci_low": 2338.67,
+      "ci_up": 2669.44,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-08",
+      "observed_price": 2650.0,
+      "stce_predicted": 2502.23,
+      "ci_low": 2370.6,
+      "ci_up": 2633.86,
+      "in_band": false
+    },
+    {
+      "date": "2017-06-09",
+      "observed_price": 2650.0,
+      "stce_predicted": 2544.35,
+      "ci_low": 2412.72,
+      "ci_up": 2675.99,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-10",
+      "observed_price": 2650.0,
+      "stce_predicted": 2590.93,
+      "ci_low": 2459.3,
+      "ci_up": 2722.56,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-11",
+      "observed_price": 2650.0,
+      "stce_predicted": 2606.06,
+      "ci_low": 2474.43,
+      "ci_up": 2737.7,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-12",
+      "observed_price": 2650.0,
+      "stce_predicted": 2630.1,
+      "ci_low": 2498.47,
+      "ci_up": 2761.73,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-13",
+      "observed_price": 2650.0,
+      "stce_predicted": 2655.28,
+      "ci_low": 2523.65,
+      "ci_up": 2786.91,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-14",
+      "observed_price": 2650.0,
+      "stce_predicted": 2663.82,
+      "ci_low": 2532.19,
+      "ci_up": 2795.46,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-15",
+      "observed_price": 2650.0,
+      "stce_predicted": 2659.48,
+      "ci_low": 2527.85,
+      "ci_up": 2791.12,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-16",
+      "observed_price": 2650.0,
+      "stce_predicted": 2657.92,
+      "ci_low": 2526.29,
+      "ci_up": 2789.55,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-17",
+      "observed_price": 2650.0,
+      "stce_predicted": 2668.41,
+      "ci_low": 2536.78,
+      "ci_up": 2800.04,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-18",
+      "observed_price": 2650.0,
+      "stce_predicted": 2676.14,
+      "ci_low": 2544.51,
+      "ci_up": 2807.78,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-19",
+      "observed_price": 2650.0,
+      "stce_predicted": 2690.7,
+      "ci_low": 2559.07,
+      "ci_up": 2822.34,
+      "in_band": true
+    },
+    {
+      "date": "2017-06-20",
+      "observed_price": 2650.0,
+      "stce_predicted": 2684.1,
+      "ci_low": 2552.47,
+      "ci_up": 2815.73,
+      "in_band": true
+    }
+  ]
+}
