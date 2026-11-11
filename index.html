@@ -3,873 +3,1475 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgriMart AI — Confidence-Aware Dynamic Pricing &amp; Rule-Based Settlement Platform</title>
+  <title>AgriMart AI — Agricultural Commodity Desk & Escrow Settlement</title>
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#15803d" />
+  <meta name="theme-color" content="#0f291e" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f7f6f2;
-      --surface: #ffffff;
-      --surface-2: #f2f1ec;
-      --border: #dfddd4;
-      --text: #181a18;
-      --muted: #575c57;
-      --primary: #1b3b2b;
-      --primary-light: #2d6a4f;
-      --accent: #1b3b2b;
-      --accent-light: #2d6a4f;
-      --warn: #b45309;
-      --danger: #b91c1c;
-      --card-radius: 6px;
+      --sidebar-bg: #0f1f17;
+      --sidebar-hover: #172e23;
+      --sidebar-active: #1f3d2e;
+      --sidebar-border: #1e3529;
+      --sidebar-text: #a3b8ad;
+      --sidebar-text-active: #ffffff;
+
+      --bg-canvas: #f4f5f3;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f8f9f7;
+      --bg-muted: #eef0ec;
+
+      --border: #e2e5df;
+      --border-strong: #cbd0c7;
+
+      --text-main: #111814;
+      --text-secondary: #4a554e;
+      --text-muted: #717d75;
+
+      --brand: #155e3b;
+      --brand-hover: #0f472c;
+      --brand-light: #e8f3ed;
+      --brand-border: #b8dcc8;
+
+      --amber: #b45309;
+      --amber-bg: #fef7ec;
+      --amber-border: #f5d8a8;
+
+      --red: #b91c1c;
+      --red-bg: #fef2f2;
+      --red-border: #fecaca;
+
+      --blue: #1d4ed8;
+      --blue-bg: #eff6ff;
+      --blue-border: #bfdbfe;
+
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, monospace;
+
+      --radius-sm: 5px;
+      --radius-md: 8px;
+      --radius-lg: 10px;
+      --shadow-card: 0 1px 3px rgba(15, 31, 23, 0.05), 0 1px 2px rgba(15, 31, 23, 0.03);
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+    html, body {
+      height: 100%;
+      font-family: var(--font-sans);
+      background: var(--bg-canvas);
+      color: var(--text-main);
+      font-size: 13.5px;
       line-height: 1.5;
-      font-size: 14px;
-      padding-bottom: 60px;
       -webkit-font-smoothing: antialiased;
     }
-    header {
-      background: #ffffff;
-      border-bottom: 1px solid var(--border);
-      padding: 14px 24px;
+
+    /* App Shell Layout */
+    .app-shell {
+      display: grid;
+      grid-template-columns: 248px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Left Sidebar */
+    .sidebar {
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--sidebar-border);
       position: sticky;
       top: 0;
-      z-index: 100;
+      height: 100vh;
+      user-select: none;
     }
-    .header-inner {
-      max-width: 1360px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-    .brand {
+
+    .sidebar-brand {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--sidebar-border);
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 11px;
     }
-    .brand-badge {
-      background: var(--primary);
-      color: #fff;
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: #22945b;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: 700;
-      padding: 6px 11px;
+      font-size: 15px;
+      letter-spacing: -0.03em;
+      flex-shrink: 0;
+    }
+    .brand-name {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .brand-tag {
+      font-size: 11px;
+      color: #6e8c7c;
+      font-weight: 500;
+    }
+
+    .sidebar-section-label {
+      padding: 18px 20px 6px;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #5c7869;
+      font-weight: 700;
+    }
+
+    .sidebar-nav {
+      padding: 0 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 9px 12px;
+      border: none;
+      background: transparent;
+      color: var(--sidebar-text);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.12s, color 0.12s;
+    }
+    .nav-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+    .nav-item:hover {
+      background: var(--sidebar-hover);
+      color: #e2ece6;
+    }
+    .nav-item.active {
+      background: var(--sidebar-active);
+      color: var(--sidebar-text-active);
+      font-weight: 600;
+    }
+    .nav-item.active .nav-icon {
+      opacity: 1;
+      color: #4ade80;
+    }
+    .nav-badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #b7ccc0;
+      padding: 1px 6px;
       border-radius: 4px;
-      font-size: 0.95rem;
+    }
+
+    .sidebar-footer {
+      padding: 14px 16px;
+      border-top: 1px solid var(--sidebar-border);
+      background: rgba(0, 0, 0, 0.18);
+      font-size: 11.5px;
+    }
+    .feed-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #d0dfd6;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+    }
+    .feed-sub {
+      color: #6e8c7c;
+      font-size: 11px;
+    }
+
+    /* Main Content Column */
+    .workspace {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* Top Market Ticker & Command Bar */
+    .topbar {
+      height: 56px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .view-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
       letter-spacing: -0.01em;
     }
-    .brand-title h1 {
-      font-size: 1.08rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .brand-title p {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-    .status-pills {
+    .topbar-ticker {
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .pill {
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      border-radius: 4px;
-      background: var(--surface-2);
+      align-items: center;
+      gap: 18px;
+      background: var(--bg-subtle);
       border: 1px solid var(--border);
-      color: var(--muted);
-      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 12px;
     }
-    .pill.green { background: #eaf2ed; border-color: #c2d9cb; color: #1b3b2b; }
-    .pill.blue { background: #eef4f8; border-color: #c6d9e8; color: #1e4d6b; }
-
-    nav.tabs {
-      max-width: 1360px;
-      margin: 14px auto 0;
-      padding: 0 24px;
+    .ticker-item {
       display: flex;
+      align-items: center;
       gap: 6px;
-      flex-wrap: wrap;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
     }
-    .tab-btn {
-      background: var(--surface);
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 8px 14px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 500;
-      font-size: 0.84rem;
-      transition: background-color 0.12s, color 0.12s;
+    .ticker-name {
+      color: var(--text-secondary);
+      font-weight: 600;
     }
-    .tab-btn:hover { color: var(--text); background: var(--surface-2); }
-    .tab-btn.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
+    .ticker-val {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .ticker-up {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #15803d;
       font-weight: 600;
     }
 
-    main {
-      max-width: 1360px;
-      margin: 18px auto;
-      padding: 0 24px;
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
+
+    /* Main Scroll Area */
+    .content-area {
+      padding: 24px 28px 48px;
+      max-width: 1440px;
+      width: 100%;
+    }
+
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    @media (max-width: 980px) {
-      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-    }
-
-    .card {
-      background: var(--surface);
+    /* Contract Lifecycle Stepper */
+    .lifecycle-bar {
+      background: var(--bg-surface);
       border: 1px solid var(--border);
-      border-radius: var(--card-radius);
-      padding: 20px;
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
       margin-bottom: 20px;
-      box-shadow: 0 1px 2px rgba(24, 26, 24, 0.04);
-    }
-    .card h2 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: var(--text);
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-    .card p.sub {
-      font-size: 0.81rem;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
-
-    /* Paper Fig 6 Mockup Card Styling */
-    .fig6-card {
-      background: #ffffff;
-      color: #181a18;
-      border-radius: var(--card-radius);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 1px 3px rgba(24, 26, 24, 0.06);
-    }
-    .fig6-header {
-      background: var(--primary);
-      color: #ffffff;
-      padding: 13px 20px;
-      text-align: left;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-    .fig6-body { padding: 18px; }
-    .fig6-meta {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      padding: 8px 12px;
-      border-radius: 4px;
-      font-size: 0.84rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-    .fig6-band-box {
-      background: #eaf2ed;
-      border: 1px solid #c2d9cb;
-      border-radius: 5px;
-      padding: 14px;
-      margin-bottom: 14px;
-    }
-    .fig6-band-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--primary);
-      font-weight: 600;
-    }
-    .fig6-band-value {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--text);
-      margin: 4px 0;
-      font-family: "SFMono-Regular", Consolas, monospace;
-    }
-    .fig6-band-sub {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-    .fig6-section {
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      padding: 12px;
-      margin-bottom: 12px;
-      background: #ffffff;
-    }
-    .fig6-section h4 {
-      font-size: 0.82rem;
-      color: var(--text);
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-    .shap-bar-row {
-      display: grid;
-      grid-template-columns: 150px 1fr 62px;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.78rem;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
-    .shap-bar-track {
-      background: var(--surface-2);
-      height: 10px;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .shap-bar-fill {
-      background: var(--primary-light);
-      height: 100%;
-      border-radius: 3px;
-    }
-    .fig6-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .btn-accept {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 10px;
-      border-radius: 4px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 0.86rem;
-    }
-    .btn-accept:hover { background: #12291e; }
-    .btn-reneg {
-      background: #fff;
-      color: #9e2a25;
-      border: 1px solid #e0b4b2;
-      padding: 10px;
-      border-radius: 4px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 0.86rem;
-    }
-    .btn-reneg:hover { background: #fdf0ef; }
-
-    /* Form & Controls */
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      box-shadow: var(--shadow-card);
       gap: 12px;
-      margin-bottom: 12px;
+      flex-wrap: wrap;
     }
-    label {
-      display: block;
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-bottom: 4px;
+    .step-node {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 155px;
+    }
+    .step-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--bg-muted);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-strong);
+      flex-shrink: 0;
+    }
+    .step-node.done .step-circle {
+      background: var(--brand);
+      color: #ffffff;
+      border-color: var(--brand);
+    }
+    .step-node.current .step-circle {
+      background: var(--brand-light);
+      color: var(--brand);
+      border: 2px solid var(--brand);
+    }
+    .step-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .step-label {
+      font-size: 12px;
       font-weight: 600;
+      color: var(--text-main);
     }
-    input, select {
-      width: 100%;
-      padding: 8px 10px;
-      background: #ffffff;
-      border: 1px solid #c8c5ba;
-      color: var(--text);
-      border-radius: 4px;
-      font-size: 0.86rem;
+    .step-desc {
+      font-size: 11px;
+      color: var(--text-muted);
     }
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 9px 15px;
-      border-radius: 4px;
-      font-weight: 500;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
-    .btn-primary:hover { background: #12291e; }
 
-    /* Metric KPI Boxes */
-    .kpi-box {
-      background: var(--surface);
+    /* KPI Strip */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .kpi-card {
+      background: var(--bg-surface);
       border: 1px solid var(--border);
-      border-radius: 5px;
-      padding: 13px 15px;
+      border-radius: var(--radius-md);
+      padding: 15px 18px;
+      box-shadow: var(--shadow-card);
     }
-    .kpi-label { font-size: 0.74rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; font-weight: 600; }
-    .kpi-val { font-size: 1.32rem; font-weight: 700; color: var(--text); margin-top: 3px; font-family: "SFMono-Regular", Consolas, monospace; }
-    .kpi-sub { font-size: 0.74rem; color: var(--primary-light); margin-top: 2px; }
-
-    /* Tables */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.83rem;
+    .kpi-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
     }
-    th, td {
-      padding: 9px 12px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-      color: var(--text);
-    }
-    th {
-      background: var(--surface-2);
-      color: var(--muted);
+    .kpi-label {
+      font-size: 11.5px;
       font-weight: 600;
-      font-size: 0.74rem;
+      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
-    tr.highlight-row {
-      background: #eaf2ed;
-      font-weight: 600;
+    .kpi-val {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
     }
-    .badge {
-      display: inline-block;
-      padding: 2px 7px;
-      border-radius: 3px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      font-family: "SFMono-Regular", Consolas, monospace;
+    .kpi-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
     }
-    .badge-green { background: #eaf2ed; color: #1b3b2b; border: 1px solid #c2d9cb; }
-    .badge-blue { background: #eef4f8; color: #1e4d6b; border: 1px solid #c6d9e8; }
-    .badge-warn { background: #fef6e6; color: #8c5808; border: 1px solid #f3d9a4; }
-    .badge-red { background: #fdf0ef; color: #9e2a25; border: 1px solid #f2c4c2; }
 
+    /* Layout Grids */
+    .grid-2 { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 20px; }
+    .grid-2-equal { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    @media (max-width: 1100px) {
+      .app-shell { grid-template-columns: 1fr; }
+      .sidebar { height: auto; position: relative; }
+      .sidebar-nav { flex-direction: row; flex-wrap: wrap; }
+      .kpi-grid, .grid-2, .grid-2-equal, .grid-3 { grid-template-columns: 1fr; }
+      .topbar-ticker { display: none; }
+    }
+
+    /* Surface Cards */
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--bg-subtle);
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .card-body {
+      padding: 20px;
+    }
+
+    /* Trade Ticket / Quotation Card */
+    .quote-banner {
+      background: linear-gradient(180deg, #f3f9f5 0%, #ffffff 100%);
+      border: 1px solid var(--brand-border);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+    .quote-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px dashed var(--brand-border);
+    }
+    .quote-band-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--brand);
+    }
+    .quote-band-price {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 4px 0 6px;
+      letter-spacing: -0.02em;
+    }
+    .quote-band-sub {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+    }
+
+    /* Visual Range Gauge */
+    .range-gauge {
+      margin-top: 14px;
+      padding-top: 12px;
+    }
+    .gauge-track {
+      height: 10px;
+      background: #dfe7e2;
+      border-radius: 999px;
+      position: relative;
+      overflow: hidden;
+    }
+    .gauge-active-band {
+      position: absolute;
+      left: 15%;
+      right: 15%;
+      top: 0;
+      bottom: 0;
+      background: var(--brand);
+      border-radius: 999px;
+    }
+    .gauge-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    /* SHAP Attribution Bars */
+    .shap-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .shap-row {
+      display: grid;
+      grid-template-columns: 165px 1fr 64px;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+    }
+    .shap-name {
+      color: var(--text-secondary);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .shap-track {
+      background: var(--bg-muted);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .shap-fill {
+      background: var(--brand);
+      height: 100%;
+      border-radius: 4px;
+    }
+    .shap-val {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Forms & Inputs */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px 11px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text-main);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      transition: border-color 0.12s, box-shadow 0.12s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(21, 94, 59, 0.12);
+    }
+
+    /* Buttons */
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.12s ease;
+    }
+    .btn-primary {
+      background: var(--brand);
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: var(--brand-hover);
+    }
+    .btn-outline {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border-color: var(--border-strong);
+    }
+    .btn-outline:hover {
+      background: var(--bg-subtle);
+    }
+    .btn-danger-outline {
+      background: var(--bg-surface);
+      color: var(--red);
+      border-color: var(--red-border);
+    }
+    .btn-danger-outline:hover {
+      background: var(--red-bg);
+    }
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 11.5px;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-green { background: var(--brand-light); color: var(--brand); border: 1px solid var(--brand-border); }
+    .badge-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+    .badge-warn { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+    .badge-red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+
+    /* Data Tables */
+    .table-container {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    tbody tr:hover {
+      background: #f9faf8;
+    }
+    tr.highlight-row {
+      background: var(--brand-light);
+    }
+    tr.highlight-row td {
+      font-weight: 600;
+    }
+    .mono {
+      font-family: var(--font-mono);
+    }
+
+    /* Formula Callout */
+    .formula-callout {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--brand);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    /* Canvas Chart */
     canvas.chart-canvas {
       width: 100%;
       height: 320px;
       background: #ffffff;
       border: 1px solid var(--border);
-      border-radius: 5px;
+      border-radius: var(--radius-sm);
+      display: block;
     }
-    .formula-box {
-      background: var(--surface-2);
-      border-left: 3px solid var(--primary);
+
+    /* Route Timeline */
+    .route-timeline {
+      position: relative;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .route-timeline::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--brand-border);
+    }
+    .timeline-stop {
+      position: relative;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
       padding: 10px 14px;
-      font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 0.82rem;
-      margin: 10px 0;
-      border-radius: 3px;
-      color: var(--text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .timeline-stop::before {
+      content: "";
+      position: absolute;
+      left: -18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--brand);
+      border: 2px solid #ffffff;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="brand">
-      <div class="brand-badge">AgriMart AI</div>
-      <div class="brand-title">
-        <h1>Confidence-Aware Dynamic Pricing &amp; Rule-Based Settlement Framework</h1>
-        <p>STCE Price Forecasting &bull; SHAP Explainable AI &bull; Pre-Commitment Escrow &bull; Perishability-Aware VRPTW &bull; Crop Advisory</p>
-      </div>
-    </div>
-    <div class="status-pills">
-      <span class="pill green">STCE Coverage: 92.35% (Target 90–95%)</span>
-      <span class="pill blue">AGMARKNET Itarsi Soyabean (3,460 Daily Series)</span>
-      <span class="pill">Low-Bandwidth PWA Ready</span>
-    </div>
-  </div>
-</header>
-
-<nav class="tabs">
-  <button class="tab-btn active" onclick="switchTab('tab-quote', this)">1. Price Quotation &amp; Escrow (Fig. 6)</button>
-  <button class="tab-btn" onclick="switchTab('tab-forecast', this)">2. STCE Forecast &amp; SHAP (Table I &amp; Fig. 2–4)</button>
-  <button class="tab-btn" onclick="switchTab('tab-settlement', this)">3. Rule-Based Settlement &amp; Monte Carlo (Table II)</button>
-  <button class="tab-btn" onclick="switchTab('tab-vrptw', this)">4. Perishability VRPTW &amp; Driver Ranking</button>
-  <button class="tab-btn" onclick="switchTab('tab-advisory', this)">5. Crop Advisory, NPK &amp; Marketplace</button>
-  <button class="tab-btn" onclick="switchTab('tab-explorer', this)">6. AGMARKNET Data (3,300+ Rows) &amp; Audit Log</button>
-</nav>
-
-<main>
-  <!-- ==================== TAB 1: QUOTATION & ESCROW (FIG. 6) ==================== -->
-  <section id="tab-quote" class="tab-panel active">
-    <div class="grid-2">
-      <!-- Left: Exact Figure 6 Interactive Quotation Card -->
+<div class="app-shell">
+  <!-- ==================== LEFT SIDEBAR ==================== -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo">AM</div>
       <div>
-        <div class="fig6-card">
-          <div class="fig6-header">AgriMart AI — Price Quotation</div>
-          <div class="fig6-body">
-            <div class="fig6-meta" id="q-meta">
-              Commodity: Soyabean &nbsp;|&nbsp; Mandi: Itarsi &nbsp;|&nbsp; Load: 2.4 t (24.0 quintals)
+        <div class="brand-name">AgriMart AI</div>
+        <div class="brand-tag">Commodity & Escrow Desk</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section-label">Trading & Contracts</div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" onclick="switchTab('tab-quote', this, 'Trade Quotation & Escrow Desk')">
+        <span class="nav-item-left">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="13" y2="13"/></svg>
+          <span>Trade &amp; Escrow Desk</span>
+        </span>
+        <span class="nav-badge">LIVE</span>
+      </button>
+
+      <button class="nav-item" onclick="switchTab('tab-forecast', this, 'STCE Price Intelligence & SHAP')">
+        <span class="nav-item-left">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>Price Forecast &amp; SHAP</span>
+        </span>
+        <span class="nav-badge">92.4%</span>
+      </button>
+
+      <button class="nav-item" onclick="switchTab('tab-settlement', this, 'Rule-Based Settlement & Risk Simulator')">
+        <span class="nav-item-left">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>Settlement Simulator</span>
+        </span>
+        <span class="nav-badge">2,000</span>
+      </button>
+
+      <div class="sidebar-section-label" style="padding-left:10px;">Operations &amp; Advisory</div>
+
+      <button class="nav-item" onclick="switchTab('tab-vrptw', this, 'Fleet Routing & Driver Pull Queue')">
+        <span class="nav-item-left">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <span>Fleet &amp; Route Dispatch</span>
+        </span>
+        <span class="nav-badge">VRPTW</span>
+      </button>
+
+      <button class="nav-item" onclick="switchTab('tab-advisory', this, 'Seasonal Crop & Soil NPK Advisory')">
+        <span class="nav-item-left">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Crop &amp; Soil Advisory</span>
+        </span>
+      </button>
+
+      <button class="nav-item" onclick="switchTab('tab-explorer', this, 'AGMARKNET Market Terminal & Audit Ledger')">
+        <span class="nav-item-left">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          <span>Mandi Terminal &amp; Ledger</span>
+        </span>
+        <span class="nav-badge">3,318</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="feed-status">
+        <span class="pulse-dot"></span>
+        <span>AGMARKNET Feed Active</span>
+      </div>
+      <div class="feed-sub">Itarsi &amp; MP Regulated Mandis &bull; SHA-256 Ledger</div>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN WORKSPACE ==================== -->
+  <div class="workspace">
+    <!-- Top Command & Ticker Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="view-title" id="topbar-view-title">Trade Quotation &amp; Escrow Desk</span>
+      </div>
+
+      <div class="topbar-ticker">
+        <div class="ticker-item">
+          <span class="ticker-name">SOYABEAN (ITARSI)</span>
+          <span class="ticker-val">₹3,421/q</span>
+          <span class="ticker-up">[3,239 – 3,637]</span>
+        </div>
+        <span style="color:var(--border-strong);">|</span>
+        <div class="ticker-item">
+          <span class="ticker-name">WHEAT (SHARBATI)</span>
+          <span class="ticker-val">₹2,445/q</span>
+        </div>
+        <span style="color:var(--border-strong);">|</span>
+        <div class="ticker-item">
+          <span class="ticker-name">CHANA (DESI)</span>
+          <span class="ticker-val">₹5,120/q</span>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <span class="badge badge-green" id="escrow-state-badge">QUOTE_GENERATED</span>
+      </div>
+    </header>
+
+    <main class="content-area">
+      <!-- ==================== TAB 1: QUOTATION & ESCROW DESK ==================== -->
+      <section id="tab-quote" class="tab-panel active">
+
+        <!-- Interactive 5-Step Contract Lifecycle Stepper -->
+        <div class="lifecycle-bar">
+          <div class="step-node done" id="step-1">
+            <div class="step-circle">1</div>
+            <div class="step-info">
+              <span class="step-label">STCE Price Band Quoted</span>
+              <span class="step-desc">92.4% empirical coverage</span>
             </div>
-            <div class="fig6-band-box">
-              <div class="fig6-band-title">Predicted Price Band (STCE)</div>
-              <div class="fig6-band-value" id="q-band">₹ 3,239 – ₹ 3,637 per quintal</div>
-              <div class="fig6-band-sub" id="q-sub">
-                Point estimate: ₹ 3,421/q &nbsp;|&nbsp; Test-set interval coverage: 92.4%
+          </div>
+          <div class="step-node current" id="step-2">
+            <div class="step-circle">2</div>
+            <div class="step-info">
+              <span class="step-label">Pre-Commitment Escrow</span>
+              <span class="step-desc">Lock [P_L, P_U] boundaries</span>
+            </div>
+          </div>
+          <div class="step-node" id="step-3">
+            <div class="step-circle">3</div>
+            <div class="step-info">
+              <span class="step-label">Perishability VRPTW</span>
+              <span class="step-desc">Reputation driver assigned</span>
+            </div>
+          </div>
+          <div class="step-node" id="step-4">
+            <div class="step-circle">4</div>
+            <div class="step-info">
+              <span class="step-label">Mandi Gate Inspection</span>
+              <span class="step-desc">Moisture &amp; grading check</span>
+            </div>
+          </div>
+          <div class="step-node" id="step-5">
+            <div class="step-circle">5</div>
+            <div class="step-info">
+              <span class="step-label">Rule-Based Payout</span>
+              <span class="step-desc">Zero band violations</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Left: Live Price Band Quotation Ticket -->
+          <div>
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Contractual Price Band Quotation</div>
+                  <div class="card-subtitle">Pre-dispatch valuation backed by Single-Layer Transformer Convolutional Encoder</div>
+                </div>
+                <span class="badge badge-green">Coverage: 92.35%</span>
+              </div>
+              <div class="card-body">
+                <div class="quote-banner">
+                  <div class="quote-meta-bar" id="q-meta">
+                    <span>Commodity: <strong>Soyabean (Yellow)</strong></span>
+                    <span>Mandi: <strong>Itarsi APMC</strong></span>
+                    <span>Lot: <strong>2.4 t (24.0 q)</strong></span>
+                  </div>
+                  <div class="quote-band-label">Committed Settlement Band [P_L, P_U]</div>
+                  <div class="quote-band-price" id="q-band">₹ 3,239 – ₹ 3,637 <span style="font-size:14px; font-weight:500; color:var(--text-secondary);">/ quintal</span></div>
+                  <div class="quote-band-sub" id="q-sub">
+                    STCE Point Forecast: <strong>₹ 3,421/q</strong> &nbsp;&bull;&nbsp; Band Midpoint: <strong>₹ 3,438/q</strong>
+                  </div>
+
+                  <div class="range-gauge">
+                    <div class="gauge-track">
+                      <div class="gauge-active-band"></div>
+                    </div>
+                    <div class="gauge-labels">
+                      <span id="gauge-low">Floor P_L: ₹3,239</span>
+                      <span id="gauge-mid">Midpoint: ₹3,438</span>
+                      <span id="gauge-up">Ceiling P_U: ₹3,637</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                  <div style="font-size:12px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px;">
+                    Primary Market Drivers (Local SHAP Attribution)
+                  </div>
+                  <div id="q-shap-bars" class="shap-list"></div>
+                </div>
+
+                <div class="btn-row" style="margin-bottom: 16px;">
+                  <button class="btn btn-primary" onclick="acceptAndLockEscrow()">
+                    Accept &amp; Lock Escrow Band
+                  </button>
+                  <button class="btn btn-danger-outline" onclick="requestRenegotiation()">
+                    Request Band Review
+                  </button>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; padding-top:14px; border-top:1px solid var(--border); font-size:12px;">
+                  <div style="background:var(--bg-subtle); padding:10px 12px; border-radius:var(--radius-sm); border:1px solid var(--border);" id="q-settlement-status">
+                    <div style="font-weight:700; color:var(--brand); margin-bottom:2px;">Settlement Protection</div>
+                    Avg. midpoint deviation: <strong>1.92%</strong> &bull; <strong>0 violations</strong> across 2,000 runs.
+                  </div>
+                  <div style="background:var(--bg-subtle); padding:10px 12px; border-radius:var(--radius-sm); border:1px solid var(--border);">
+                    <div style="font-weight:700; color:var(--text-main); margin-bottom:2px;">Logistics SLA Benchmark</div>
+                    Transit: <strong>14.41 h</strong> &bull; Spoilage: <strong>10.5%</strong> (vs. 26.65% baseline).
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Shipment Configurator & Active Escrow Ledger -->
+          <div>
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Configure Shipment &amp; Re-Quote</div>
+                  <div class="card-subtitle">Adjust commodity, destination mandi, load weight, and arrival pressure</div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div>
+                    <label for="inp-commodity">Commodity &amp; Variety</label>
+                    <select id="inp-commodity" onchange="updateQuotationCard()">
+                      <option value="Soyabean">Soyabean (Yellow / JS-9560)</option>
+                      <option value="Wheat">Wheat (Sharbati / MP)</option>
+                      <option value="Chana">Chana / Bengal Gram</option>
+                      <option value="Maize">Maize (Hybrid Yellow)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="inp-mandi">Destination Regulated Mandi</label>
+                    <select id="inp-mandi" onchange="updateQuotationCard()">
+                      <option value="Itarsi">Itarsi APMC (Hoshangabad, MP)</option>
+                      <option value="Indore">Indore Laxmibai Nagar APMC</option>
+                      <option value="Bhopal">Bhopal Karond Krishi Mandi</option>
+                      <option value="Harda">Harda Regulated Mandi (MP)</option>
+                      <option value="Ujjain">Ujjain Chimanganj Mandi</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div>
+                    <label for="inp-load">Lot Weight (Tonnes)</label>
+                    <input type="number" id="inp-load" value="2.4" step="0.2" min="0.5" max="25" oninput="updateQuotationCard()" />
+                  </div>
+                  <div>
+                    <label for="inp-dist">Farm-to-Mandi Distance (km)</label>
+                    <input type="number" id="inp-dist" value="92" step="5" min="10" max="500" oninput="updateQuotationCard()" />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div>
+                    <label for="inp-arrivals">Mandi Arrival Volume (Tonnes)</label>
+                    <input type="number" id="inp-arrivals" value="185.0" step="10" oninput="updateQuotationCard()" />
+                  </div>
+                  <div>
+                    <label for="inp-cpi">Perishability Index (CPI: 0–1)</label>
+                    <input type="number" id="inp-cpi" value="0.12" step="0.02" min="0.05" max="0.95" oninput="updateQuotationCard()" />
+                  </div>
+                </div>
+                <button class="btn btn-outline" style="width:100%;" onclick="updateQuotationCard()">
+                  Recalculate STCE Price Band &amp; SHAP
+                </button>
               </div>
             </div>
 
-            <div class="fig6-section">
-              <h4>Why this range? (real SHAP explanation)</h4>
-              <div id="q-shap-bars"></div>
-            </div>
-
-            <div class="fig6-actions">
-              <button class="btn-accept" onclick="acceptAndLockEscrow()">Accept &amp; Lock Escrow</button>
-              <button class="btn-reneg" onclick="requestRenegotiation()">Request Renegotiation</button>
-            </div>
-
-            <div class="fig6-section" style="background:#f0fdf4; border-color:#bbf7d0;">
-              <h4 style="color:#166534;">Settlement Status (rule-based engine)</h4>
-              <div style="font-size:0.8rem; color:#14532d;" id="q-settlement-status">
-                Agreed band: <strong>₹ 3,239 – ₹ 3,637 /q</strong> &nbsp;|&nbsp; Avg. settlement deviation: <strong>1.92%</strong><br/>
-                Always constrained within agreed band (<strong>0 violations across 2,000 simulations</strong>)
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Escrow Commitment Account</div>
+                  <div class="card-subtitle">Software-enforced hold linked to quality-verified mandi gate settlement</div>
+                </div>
               </div>
-            </div>
-
-            <div class="fig6-section" style="background:#f8fafc; margin-bottom:0;">
-              <h4>Perishability-Aware Routing (simulation avg.)</h4>
-              <div style="font-size:0.8rem; color:#334155;">
-                Mean transit time: <strong>14.41 h</strong> (baseline 16.46 h) &nbsp;|&nbsp; On-time delivery: <strong>69.95%</strong><br/>
-                Spoilage rate: <strong>10.5%</strong> (baseline 26.65%) &nbsp;|&nbsp; Route acceptance: <strong>75.25%</strong> &nbsp;|&nbsp; Assign-to-pickup: <strong>20.53 min</strong>
+              <div class="card-body">
+                <div class="grid-2-equal" style="margin-bottom:14px;">
+                  <div class="kpi-card" style="padding:12px 14px;">
+                    <div class="kpi-label">Contract Reference</div>
+                    <div class="kpi-val" id="escrow-tx-id" style="font-size:16px; margin-top:2px;">AGRI-202601</div>
+                    <div class="kpi-sub">SHA-256 Chained</div>
+                  </div>
+                  <div class="kpi-card" style="padding:12px 14px;">
+                    <div class="kpi-label">Escrow Hold (Midpoint)</div>
+                    <div class="kpi-val" id="escrow-deposit-val" style="font-size:18px; color:var(--brand); margin-top:2px;">₹ 82,512</div>
+                    <div class="kpi-sub" id="escrow-band-note">Locked for 24.0 quintals</div>
+                  </div>
+                </div>
+                <div id="escrow-live-message" style="padding:12px 14px; background:var(--bg-subtle); border:1px solid var(--border); border-radius:var(--radius-sm); font-size:12.5px; color:var(--text-secondary);">
+                  Quotation ready for farmer &amp; wholesaler pre-dispatch acceptance. Click <strong>"Accept &amp; Lock Escrow Band"</strong> to commit the price boundaries into the ledger.
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Right: Custom Load Quotation Generator & Active Escrow Ledger State -->
-      <div>
+      <!-- ==================== TAB 2: STCE FORECAST & SHAP ==================== -->
+      <section id="tab-forecast" class="tab-panel">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">STCE Test RMSE</div>
+            <div class="kpi-val">₹ 120.23 <span style="font-size:13px; font-weight:500;">/q</span></div>
+            <div class="kpi-sub">Held-out 15% chronological test set</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Test MAE &amp; MAPE</div>
+            <div class="kpi-val">2.55%</div>
+            <div class="kpi-sub">Mean Absolute Error: ₹ 78.94/q</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Empirical Band Coverage</div>
+            <div class="kpi-val" style="color:var(--brand);">92.35%</div>
+            <div class="kpi-sub">Within 90–95% nominal target</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Continuous Daily Series</div>
+            <div class="kpi-val">3,460 Days</div>
+            <div class="kpi-sub">2,718 raw &rarr; 2,359 trading days</div>
+          </div>
+        </div>
+
         <div class="card">
-          <h2>Generate Load-Specific STCE Quotation</h2>
-          <p class="sub">Module 4 &amp; 5: Computes STCE point forecast, [Q_α, Q_{1-α}] confidence band, and local SHAP attributions before dispatch.</p>
-          <div class="form-row">
+          <div class="card-header">
             <div>
-              <label>Commodity</label>
-              <select id="inp-commodity" onchange="updateQuotationCard()">
-                <option value="Soyabean">Soyabean (Yellow / JS-9560)</option>
-                <option value="Wheat">Wheat (Sharbati / MP)</option>
-                <option value="Chana">Chana / Bengal Gram</option>
-                <option value="Maize">Maize (Hybrid)</option>
-              </select>
+              <div class="card-title">Observed vs. STCE Predicted Mandi Price &amp; 90% Confidence Interval</div>
+              <div class="card-subtitle">Soyabean at Itarsi APMC (Held-Out Test Partition, N = 383 Trading Days)</div>
             </div>
-            <div>
-              <label>Destination APMC Mandi</label>
-              <select id="inp-mandi" onchange="updateQuotationCard()">
-                <option value="Itarsi">Itarsi (Hoshangabad, MP)</option>
-                <option value="Indore">Indore APMC (MP)</option>
-                <option value="Bhopal">Bhopal Krishi Upaj Mandi</option>
-                <option value="Harda">Harda Mandi (MP)</option>
-                <option value="Ujjain">Ujjain Mandi (MP)</option>
-              </select>
+            <div style="display:flex; gap:14px; font-size:12px;">
+              <span><strong style="color:#155e3b;">&#9644;</strong> Observed Modal Price</span>
+              <span><strong style="color:#b45309;">&#9645;</strong> STCE Point Forecast</span>
+              <span><strong style="color:#86efac;">&#9632;</strong> [Q_0.05, Q_0.95] Band</span>
             </div>
           </div>
-          <div class="form-row">
-            <div>
-              <label>Shipment Load Weight (Tonnes)</label>
-              <input type="number" id="inp-load" value="2.4" step="0.2" min="0.5" max="25" oninput="updateQuotationCard()" />
+          <div class="card-body">
+            <canvas id="forecastChart" class="chart-canvas" width="1200" height="320"></canvas>
+          </div>
+        </div>
+
+        <div class="grid-2-equal">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Model Benchmark Comparison</div>
+                <div class="card-subtitle">Evaluated on identical chronological 70% / 15% / 15% splits</div>
+              </div>
             </div>
-            <div>
-              <label>Farm-to-Mandi Distance (km)</label>
-              <input type="number" id="inp-dist" value="92" step="5" min="10" max="500" oninput="updateQuotationCard()" />
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Architecture</th>
+                    <th>RMSE (₹/q)</th>
+                    <th>MAE (₹/q)</th>
+                    <th>MAPE (%)</th>
+                    <th>Coverage</th>
+                  </tr>
+                </thead>
+                <tbody id="table1-body"></tbody>
+              </table>
+            </div>
+
+            <div class="card-header" style="border-top:1px solid var(--border);">
+              <div>
+                <div class="card-title">Multi-Horizon Forecast Stability</div>
+                <div class="card-subtitle">Out-of-sample accuracy across 30, 60, 90, and 383-day windows</div>
+              </div>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Horizon Window</th>
+                    <th>RMSE (₹/q)</th>
+                    <th>MAE (₹/q)</th>
+                    <th>MAPE (%)</th>
+                    <th>Coverage</th>
+                  </tr>
+                </thead>
+                <tbody id="horizon-body"></tbody>
+              </table>
             </div>
           </div>
-          <div class="form-row">
-            <div>
-              <label>Recent Arrival Volume Pressure (Tonnes)</label>
-              <input type="number" id="inp-arrivals" value="185.0" step="10" oninput="updateQuotationCard()" />
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Global SHAP Feature Attribution (12 Engineered Features)</div>
+                <div class="card-subtitle">Mean absolute gradient-SHAP contribution across held-out test set</div>
+              </div>
             </div>
-            <div>
-              <label>Crop Perishability Index (CPI: 0 to 1)</label>
-              <input type="number" id="inp-cpi" value="0.12" step="0.02" min="0.05" max="0.95" oninput="updateQuotationCard()" />
+            <div class="card-body">
+              <div id="global-shap-container" class="shap-list"></div>
+
+              <div style="margin-top:22px; padding-top:16px; border-top:1px solid var(--border);">
+                <div style="font-size:12px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom:10px;">
+                  Data Ingestion &amp; Calibration Pipeline
+                </div>
+                <div class="grid-3">
+                  <div class="kpi-card" style="padding:10px 12px;">
+                    <div class="kpi-label">Raw Records</div>
+                    <div class="kpi-val" style="font-size:17px;">2,718</div>
+                    <div class="kpi-sub">52 invalid filtered</div>
+                  </div>
+                  <div class="kpi-card" style="padding:10px 12px;">
+                    <div class="kpi-label">Trading Days</div>
+                    <div class="kpi-val" style="font-size:17px;">2,359</div>
+                    <div class="kpi-sub">Arrival-weighted</div>
+                  </div>
+                  <div class="kpi-card" style="padding:10px 12px;">
+                    <div class="kpi-label">Daily Series</div>
+                    <div class="kpi-val" style="font-size:17px;">3,460</div>
+                    <div class="kpi-sub">1,101 interpolated</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <button class="btn-primary" onclick="updateQuotationCard()">Recompute STCE Confidence Band &amp; SHAP</button>
         </div>
+      </section>
 
-        <div class="card">
-          <h2>Pre-Commitment Simulated Escrow State <span class="badge badge-green" id="escrow-state-badge">QUOTE_GENERATED</span></h2>
-          <p class="sub">Module 5: Software-managed commitment ledger tying prediction interval [P_L, P_U] to post-delivery quality-gated release.</p>
-          <div class="grid-2" style="margin-bottom:12px;">
-            <div class="kpi-box">
-              <div class="kpi-label">Active Transaction ID</div>
-              <div class="kpi-val" id="escrow-tx-id" style="font-size:1.1rem;">AGRI-202601</div>
-              <div class="kpi-sub">SHA-256 Audit Tracked</div>
+      <!-- ==================== TAB 3: RULE-BASED SETTLEMENT & MONTE CARLO ==================== -->
+      <section id="tab-settlement" class="tab-panel">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Deterministic Multi-Factor Settlement Engine</div>
+                <div class="card-subtitle">Computes post-delivery payout adjustments strictly clamped inside [P_L, P_U]</div>
+              </div>
             </div>
-            <div class="kpi-box">
-              <div class="kpi-label">Simulated Escrow Deposit (Midpoint)</div>
-              <div class="kpi-val" id="escrow-deposit-val">₹ 82,512</div>
-              <div class="kpi-sub" id="escrow-band-note">Locked for 24.0 quintals</div>
+            <div class="card-body">
+              <div class="formula-callout">
+                P_mid = (P_L + P_U) / 2<br/>
+                P_rule = P_mid + w1&middot;&Delta;_demand &minus; w2&middot;&Delta;_delay &minus; w3&middot;S_spoilage &minus; w4&middot;Q_dev<br/>
+                P_final = min(P_U, max(P_L, P_rule))
+              </div>
+
+              <div class="form-row">
+                <div>
+                  <label for="settle-plow">Committed Floor P_L (₹/q)</label>
+                  <input type="number" id="settle-plow" value="3239" oninput="calculateLiveSettlement()" />
+                </div>
+                <div>
+                  <label for="settle-pup">Committed Ceiling P_U (₹/q)</label>
+                  <input type="number" id="settle-pup" value="3637" oninput="calculateLiveSettlement()" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div>
+                  <label for="settle-demand">Demand Shift &Delta;_demand (&minus;0.15 to +0.15)</label>
+                  <input type="number" id="settle-demand" value="0.02" step="0.01" min="-0.2" max="0.2" oninput="calculateLiveSettlement()" />
+                </div>
+                <div>
+                  <label for="settle-delay">Transit Delay &Delta;_delay (Hours)</label>
+                  <input type="number" id="settle-delay" value="1.5" step="0.2" min="0" max="12" oninput="calculateLiveSettlement()" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div>
+                  <label for="settle-spoil">Spoilage Index S_spoilage (0–1)</label>
+                  <input type="number" id="settle-spoil" value="0.10" step="0.01" min="0" max="1" oninput="calculateLiveSettlement()" />
+                </div>
+                <div>
+                  <label for="settle-qdev">Quality Penalty Q_dev (0–0.15)</label>
+                  <input type="number" id="settle-qdev" value="0.03" step="0.01" min="0" max="0.3" oninput="calculateLiveSettlement()" />
+                </div>
+              </div>
+
+              <div id="settle-result-panel" style="background:var(--bg-subtle); padding:15px; border-radius:var(--radius-sm); border:1px solid var(--border); margin-bottom:14px;"></div>
+
+              <button class="btn btn-primary" style="width:100%;" onclick="commitSettlementToLedger()">
+                Verify Mandi Gate Quality &amp; Release Escrow Payout
+              </button>
             </div>
           </div>
-          <div id="escrow-live-message" style="padding:12px; background:var(--surface-2); border-radius:5px; font-size:0.84rem; color:var(--text);">
-            Quotation ready for farmer &amp; wholesaler pre-dispatch acceptance. Click <strong>"Accept &amp; Lock Escrow"</strong> to commit the price band into the append-only ledger.
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Monte Carlo Simulation Benchmark (N = 2,000 Shipments)</div>
+                <div class="card-subtitle">Unstructured Post-Delivery Bargaining vs. AgriMart AI Pre-Committed Band</div>
+              </div>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Supply-Chain Metric</th>
+                    <th>Baseline</th>
+                    <th>AgriMart AI</th>
+                    <th>Net Gain</th>
+                  </tr>
+                </thead>
+                <tbody id="table2-body"></tbody>
+              </table>
+            </div>
+            <div class="card-body" style="border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+              <span id="mc-run-status" style="font-size:12.5px; color:var(--brand); font-weight:600;">
+                0 price-band violations across all 2,000 stochastic shipments
+              </span>
+              <button class="btn btn-outline btn-sm" onclick="runFreshMonteCarlo()">
+                Run 2,000 Live Trials
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- ==================== TAB 2: STCE FORECAST & SHAP (TABLE I & FIG 2-4) ==================== -->
-  <section id="tab-forecast" class="tab-panel">
-    <div class="grid-4" style="margin-bottom:20px;">
-      <div class="kpi-box">
-        <div class="kpi-label">STCE Test RMSE</div>
-        <div class="kpi-val">₹ 120.23 /q</div>
-        <div class="kpi-sub">Held-out Test Partition (15%)</div>
-      </div>
-      <div class="kpi-box">
-        <div class="kpi-label">STCE Test MAE &amp; MAPE</div>
-        <div class="kpi-val">2.55%</div>
-        <div class="kpi-sub">MAE: ₹ 78.94 per quintal</div>
-      </div>
-      <div class="kpi-box">
-        <div class="kpi-label">Prediction Interval Coverage</div>
-        <div class="kpi-val" style="color:#4ade80;">92.35%</div>
-        <div class="kpi-sub">Closest to nominal 90–95% target</div>
-      </div>
-      <div class="kpi-box">
-        <div class="kpi-label">AGMARKNET Continuous Series</div>
-        <div class="kpi-val">3,460 Days</div>
-        <div class="kpi-sub">2,718 raw &rarr; 2,359 trading days</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Figure 3 — Observed vs. Predicted Mandi Price with STCE Confidence Band (Held-Out Test Set)</h2>
-      <p class="sub">Soyabean, Itarsi Mandi (AGMARKNET, chronological 70/15/15 split). Shaded area shows the 5th–95th percentile prediction interval [Q_α, Q_{1-α}].</p>
-      <canvas id="forecastChart" class="chart-canvas" width="1200" height="340"></canvas>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <h2>Table I — Forecasting Performance on Held-Out Test Set</h2>
-        <p class="sub">Evaluated on AGMARKNET Soyabean (Itarsi Mandi) across 2,553 feature-engineered daily records (chronological 70/15/15 split).</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Model</th>
-              <th>RMSE (₹/q)</th>
-              <th>MAE (₹/q)</th>
-              <th>MAPE (%)</th>
-              <th>Interval Coverage (%)</th>
-            </tr>
-          </thead>
-          <tbody id="table1-body"></tbody>
-        </table>
-
-        <h2 style="margin-top:20px;">Multi-Horizon Temporal Robustness</h2>
-        <p class="sub">Evaluation across 30-day, 60-day, 90-day, and full test horizons (Section IV).</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Evaluation Horizon</th>
-              <th>RMSE (₹/q)</th>
-              <th>MAE (₹/q)</th>
-              <th>MAPE (%)</th>
-              <th>Coverage (%)</th>
-            </tr>
-          </thead>
-          <tbody id="horizon-body"></tbody>
-        </table>
-      </div>
-
-      <div class="card">
-        <h2>Figure 4 — Global SHAP Feature Importance (Held-Out Test Set)</h2>
-        <p class="sub">Computed from the trained STCE model using a gradient-based SHAP explainer across all 12 engineered market features.</p>
-        <div id="global-shap-container" style="margin-top:12px;"></div>
-
-        <h2 style="margin-top:22px;">Figure 2 — Dataset Preprocessing Summary (Jan 2008 – Jun 2017)</h2>
-        <div class="grid-3" style="margin-top:10px;">
-          <div class="kpi-box">
-            <div class="kpi-label">1. Raw Variety Records</div>
-            <div class="kpi-val">2,718</div>
-            <div class="kpi-sub">0 exact duplicates</div>
-          </div>
-          <div class="kpi-box">
-            <div class="kpi-label">2. Invalid Removed</div>
-            <div class="kpi-val">52</div>
-            <div class="kpi-sub">2,666 valid &rarr; 2,359 trading days</div>
-          </div>
-          <div class="kpi-box">
-            <div class="kpi-label">3. Continuous Daily Series</div>
-            <div class="kpi-val">3,460</div>
-            <div class="kpi-sub">1,101 non-trading days interpolated</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== TAB 3: RULE-BASED SETTLEMENT & MONTE CARLO ==================== -->
-  <section id="tab-settlement" class="tab-panel">
-    <div class="grid-2">
-      <div class="card">
-        <h2>Module 6 — Interactive Rule-Based Settlement Calculator</h2>
-        <p class="sub">Deterministic multi-factor settlement adjusting the committed midpoint while strictly honoring [P_L, P_U].</p>
-        <div class="formula-box">
-          P_mid  = (P_L + P_U) / 2<br/>
-          P_rule = P_mid + w1&middot;&Delta;_demand &minus; w2&middot;&Delta;_delay &minus; w3&middot;S_spoilage &minus; w4&middot;Q_dev<br/>
-          P_f    = min(P_U, max(P_L, P_rule))
-        </div>
-
-        <div class="form-row">
-          <div>
-            <label>Agreed Lower Bound P_L (₹/q)</label>
-            <input type="number" id="settle-plow" value="3239" oninput="calculateLiveSettlement()" />
-          </div>
-          <div>
-            <label>Agreed Upper Bound P_U (₹/q)</label>
-            <input type="number" id="settle-pup" value="3637" oninput="calculateLiveSettlement()" />
-          </div>
-        </div>
-        <div class="form-row">
-          <div>
-            <label>Demand Shift &Delta;_demand (&minus;0.15 to +0.15)</label>
-            <input type="number" id="settle-demand" value="0.02" step="0.01" min="-0.2" max="0.2" oninput="calculateLiveSettlement()" />
-          </div>
-          <div>
-            <label>Transit Delay &Delta;_delay (Hours: 0 to 6)</label>
-            <input type="number" id="settle-delay" value="1.5" step="0.2" min="0" max="12" oninput="calculateLiveSettlement()" />
-          </div>
-        </div>
-        <div class="form-row">
-          <div>
-            <label>Spoilage Index S_spoilage (0.0 to 1.0)</label>
-            <input type="number" id="settle-spoil" value="0.10" step="0.01" min="0" max="1" oninput="calculateLiveSettlement()" />
-          </div>
-          <div>
-            <label>Quality Deviation Penalty Q_dev (0.0 to 0.15)</label>
-            <input type="number" id="settle-qdev" value="0.03" step="0.01" min="0" max="0.3" oninput="calculateLiveSettlement()" />
-          </div>
-        </div>
-
-        <div id="settle-result-panel" style="background:var(--surface-2); padding:16px; border-radius:10px; border:1px solid var(--border); margin-top:12px;"></div>
-        <button class="btn-primary" style="margin-top:12px; width:100%;" onclick="commitSettlementToLedger()">Verify Delivery Quality &amp; Release Simulated Escrow Payout</button>
-      </div>
-
-      <div class="card">
-        <h2>Table II — Monte Carlo Benchmark (N = 2,000 Shipments)</h2>
-        <p class="sub">Controlled simulation sampling &Delta;_delay ~ U(0,6)h, S_spoil ~ N(0.10, 0.03), &Delta;_demand ~ N(0, 0.05), Q_dev ~ U(0, 0.15).</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Evaluation Metric</th>
-              <th>Unstructured Baseline</th>
-              <th>AgriMart AI</th>
-              <th>Improvement</th>
-            </tr>
-          </thead>
-          <tbody id="table2-body"></tbody>
-        </table>
-        <div style="margin-top:14px;">
-          <button class="btn-primary" onclick="runFreshMonteCarlo()">Re-Run Live 2,000-Shipment Monte Carlo Simulation</button>
-          <span id="mc-run-status" style="margin-left:10px; font-size:0.82rem; color:#86efac;">0 price-band violations across all 2,000 shipments</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== TAB 4: PERISHABILITY VRPTW & DRIVER RANKING ==================== -->
-  <section id="tab-vrptw" class="tab-panel">
-    <div class="grid-2">
-      <div class="card">
-        <h2>Module 7 — Perishability-Aware VRPTW Route Optimizer (OR-Tools)</h2>
-        <p class="sub">Minimizes composite objective Z = C + &lambda;&middot;D + &mu;&middot;S under vehicle capacity and delivery time windows.</p>
-        <div class="formula-box">
-          min Z = C (Transport Cost) + &lambda;&middot;D (Delivery Delay) + &mu;&middot;S (Perishability Spoilage Risk)
-        </div>
-        <div class="grid-3" style="margin-bottom:14px;">
-          <div class="kpi-box">
+      <!-- ==================== TAB 4: PERISHABILITY VRPTW & DRIVER RANKING ==================== -->
+      <section id="tab-vrptw" class="tab-panel">
+        <div class="kpi-grid">
+          <div class="kpi-card">
             <div class="kpi-label">Mean Transit Time</div>
             <div class="kpi-val" id="vrp-transit">14.41 h</div>
-            <div class="kpi-sub">vs. 16.46 h Baseline</div>
+            <div class="kpi-sub">vs. 16.46 h unstructured baseline</div>
           </div>
-          <div class="kpi-box">
+          <div class="kpi-card">
             <div class="kpi-label">Spoilage / Waste Rate</div>
-            <div class="kpi-val" id="vrp-spoilage" style="color:#4ade80;">10.50%</div>
-            <div class="kpi-sub">vs. 26.65% Baseline</div>
+            <div class="kpi-val" id="vrp-spoilage" style="color:var(--brand);">10.50%</div>
+            <div class="kpi-sub">60.6% reduction vs. 26.65% baseline</div>
           </div>
-          <div class="kpi-box">
+          <div class="kpi-card">
+            <div class="kpi-label">Route Acceptance Rate</div>
+            <div class="kpi-val">75.25%</div>
+            <div class="kpi-sub">vs. 48.90% baseline</div>
+          </div>
+          <div class="kpi-card">
             <div class="kpi-label">Assign-to-Pickup Time</div>
             <div class="kpi-val" id="vrp-pickup">20.53 min</div>
-            <div class="kpi-sub">vs. 54.02 min Baseline</div>
+            <div class="kpi-sub">vs. 54.02 min baseline</div>
           </div>
         </div>
-        <h3 style="font-size:0.92rem; margin-bottom:8px;">Optimized Multi-Stop Schedule (Itarsi / Narmadapuram Belt)</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Stop #</th>
-              <th>Logistics Node</th>
-              <th>Time Window (h)</th>
-              <th>ETA (h)</th>
-              <th>Cumulative Distance</th>
-            </tr>
-          </thead>
-          <tbody id="vrptw-stops-body"></tbody>
-        </table>
-      </div>
 
-      <div class="card">
-        <h2>Reputation-Ranked Driver Pull Queue</h2>
-        <p class="sub">Drivers are ranked by past punctuality, dispute-free rate, and capacity suitability. Declines trigger automatic pull reassignment.</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Driver &amp; Vehicle</th>
-              <th>Punctuality</th>
-              <th>Dispute-Free</th>
-              <th>Score</th>
-              <th>Status / Action</th>
-            </tr>
-          </thead>
-          <tbody id="driver-rank-body"></tbody>
-        </table>
-        <div style="margin-top:12px;">
-          <button class="btn-primary" onclick="resetDrivers()">Reset Driver Queue</button>
-        </div>
-      </div>
-    </div>
-  </section>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Perishability-Aware VRPTW Multi-Stop Schedule</div>
+                <div class="card-subtitle">Google OR-Tools Guided Local Search minimizing Z = C + &lambda;&middot;D + &mu;&middot;S</div>
+              </div>
+              <span class="badge badge-blue">OR-Tools Solver</span>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Stop</th>
+                    <th>Logistics Hub / Cluster</th>
+                    <th>Window</th>
+                    <th>ETA</th>
+                    <th>Distance</th>
+                  </tr>
+                </thead>
+                <tbody id="vrptw-stops-body"></tbody>
+              </table>
+            </div>
+          </div>
 
-  <!-- ==================== TAB 5: CROP ADVISORY, NPK & MARKETPLACE ==================== -->
-  <section id="tab-advisory" class="tab-panel">
-    <div class="grid-2">
-      <div class="card">
-        <h2>Next-Season Crop Advisory Ranking Engine</h2>
-        <p class="sub">Section III.F / 5.6: Ranks candidate crops by expected demand (35%), price trend (25%), cost efficiency (20%), and agro-suitability (20%).</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Crop &amp; Season</th>
-              <th>Expected Band (₹/q)</th>
-              <th>Cultivation Cost</th>
-              <th>CPI</th>
-              <th>Advisory Score</th>
-            </tr>
-          </thead>
-          <tbody id="advisory-body"></tbody>
-        </table>
-      </div>
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Reputation-Ranked Driver Pull Queue</div>
+                <div class="card-subtitle">Ranked by punctuality, dispute-free rate &amp; capacity; declines auto-reassign</div>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="resetDrivers()">Reset Queue</button>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Driver &amp; Fleet Vehicle</th>
+                    <th>On-Time</th>
+                    <th>No-Dispute</th>
+                    <th>Score</th>
+                    <th>Dispatch Action</th>
+                  </tr>
+                </thead>
+                <tbody id="driver-rank-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <div class="card">
-        <h2>Soil Nutrient (N-P-K) &amp; Fertilizer Dosage Calculator</h2>
-        <p class="sub">Precision diagnostic calculator to rectify soil deficiencies for the selected target crop.</p>
-        <div class="form-row">
-          <div>
-            <label>Target Crop</label>
-            <select id="fert-crop" onchange="computeFertilizerDosage()">
-              <option value="Soyabean" data-n="25" data-p="60" data-k="40">Soyabean (Ideal 25:60:40 kg/ha)</option>
-              <option value="Wheat" data-n="120" data-p="60" data-k="40">Wheat (Ideal 120:60:40 kg/ha)</option>
-              <option value="Chana" data-n="20" data-p="50" data-k="20">Chana / Gram (Ideal 20:50:20 kg/ha)</option>
-              <option value="Maize" data-n="135" data-p="65" data-k="50">Maize (Ideal 135:65:50 kg/ha)</option>
-            </select>
+      <!-- ==================== TAB 5: CROP ADVISORY & NPK CALCULATOR ==================== -->
+      <section id="tab-advisory" class="tab-panel">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Next-Season Crop Profitability &amp; Suitability Ranking</div>
+                <div class="card-subtitle">Weighted composite of demand (35%), price trend (25%), cost efficiency (20%), suitability (20%)</div>
+              </div>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Crop &amp; Season</th>
+                    <th>Expected Band (₹/q)</th>
+                    <th>Est. Cost</th>
+                    <th>CPI</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+                <tbody id="advisory-body"></tbody>
+              </table>
+            </div>
           </div>
-          <div>
-            <label>Soil pH Level</label>
-            <input type="number" id="fert-ph" value="6.8" step="0.1" oninput="computeFertilizerDosage()" />
-          </div>
-        </div>
-        <div class="form-row">
-          <div>
-            <label>Measured Soil Nitrogen N (kg/ha)</label>
-            <input type="number" id="fert-n" value="18" oninput="computeFertilizerDosage()" />
-          </div>
-          <div>
-            <label>Measured Soil Phosphorus P (kg/ha)</label>
-            <input type="number" id="fert-p" value="32" oninput="computeFertilizerDosage()" />
-          </div>
-        </div>
-        <div class="form-row">
-          <div>
-            <label>Measured Soil Potassium K (kg/ha)</label>
-            <input type="number" id="fert-k" value="24" oninput="computeFertilizerDosage()" />
-          </div>
-          <div>
-            <label>Farm Area (Hectares)</label>
-            <input type="number" id="fert-area" value="2.0" step="0.5" oninput="computeFertilizerDosage()" />
-          </div>
-        </div>
-        <div id="fert-output" style="background:var(--surface-2); padding:14px; border-radius:8px; font-size:0.85rem;"></div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ==================== TAB 6: AGMARKNET EXPLORER & AUDIT LOG ==================== -->
-  <section id="tab-explorer" class="tab-panel">
-    <div class="grid-2">
-      <div class="card">
-        <h2>Real AGMARKNET Mandi Dataset Explorer (<span id="total-records-count">3,318</span> Records)</h2>
-        <p class="sub">Includes all 2,718 raw Soyabean records from Itarsi Mandi (Jan 2008 – Jun 2017) plus multi-mandi MP benchmarks.</p>
-        <div class="form-row">
-          <div>
-            <label>Filter by Mandi / Market</label>
-            <input type="text" id="filter-market" placeholder="e.g. Itarsi, Indore, Bhopal..." oninput="renderAgmarknetTable()" />
-          </div>
-          <div>
-            <label>Filter by Commodity / Variety</label>
-            <input type="text" id="filter-crop" placeholder="e.g. Soyabean, Yellow, Wheat..." oninput="renderAgmarknetTable()" />
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Soil Nutrient Deficit &amp; Fertilizer Dosage Calculator</div>
+                <div class="card-subtitle">Converts field soil test readings into Urea, DAP, and MOP bag dosages</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-row">
+                <div>
+                  <label for="fert-crop">Target Crop</label>
+                  <select id="fert-crop" onchange="computeFertilizerDosage()">
+                    <option value="Soyabean" data-n="25" data-p="60" data-k="40">Soyabean (Target 25:60:40 kg/ha)</option>
+                    <option value="Wheat" data-n="120" data-p="60" data-k="40">Wheat (Target 120:60:40 kg/ha)</option>
+                    <option value="Chana" data-n="20" data-p="50" data-k="20">Chana / Gram (Target 20:50:20 kg/ha)</option>
+                    <option value="Maize" data-n="135" data-p="65" data-k="50">Maize (Target 135:65:50 kg/ha)</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="fert-ph">Measured Soil pH</label>
+                  <input type="number" id="fert-ph" value="6.8" step="0.1" oninput="computeFertilizerDosage()" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div>
+                  <label for="fert-n">Available Soil Nitrogen N (kg/ha)</label>
+                  <input type="number" id="fert-n" value="18" oninput="computeFertilizerDosage()" />
+                </div>
+                <div>
+                  <label for="fert-p">Available Soil Phosphorus P (kg/ha)</label>
+                  <input type="number" id="fert-p" value="32" oninput="computeFertilizerDosage()" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div>
+                  <label for="fert-k">Available Soil Potassium K (kg/ha)</label>
+                  <input type="number" id="fert-k" value="24" oninput="computeFertilizerDosage()" />
+                </div>
+                <div>
+                  <label for="fert-area">Cultivation Area (Hectares)</label>
+                  <input type="number" id="fert-area" value="2.0" step="0.5" oninput="computeFertilizerDosage()" />
+                </div>
+              </div>
+              <div id="fert-output" style="background:var(--bg-subtle); padding:15px; border-radius:var(--radius-sm); border:1px solid var(--border); font-size:13px;"></div>
+            </div>
           </div>
         </div>
-        <div style="max-height:420px; overflow-y:auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Mandi</th>
-                <th>Commodity (Variety)</th>
-                <th>Arrivals (t)</th>
-                <th>Min (₹/q)</th>
-                <th>Max (₹/q)</th>
-                <th>Modal (₹/q)</th>
-              </tr>
-            </thead>
-            <tbody id="agmarknet-table-body"></tbody>
-          </table>
-        </div>
-      </div>
+      </section>
 
-      <div class="card">
-        <h2>Append-Only Transaction &amp; Escrow Audit Trail</h2>
-        <p class="sub">Immutable SHA-256 hash-chained log tracking every quotation, escrow lock, VRPTW dispatch, quality check, and rule-based settlement payout.</p>
-        <div style="max-height:480px; overflow-y:auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>Seq #</th>
-                <th>Timestamp (UTC)</th>
-                <th>Tx ID</th>
-                <th>Event Type</th>
-                <th>Details</th>
-                <th>SHA-256 Hash</th>
-              </tr>
-            </thead>
-            <tbody id="audit-log-body"></tbody>
-          </table>
+      <!-- ==================== TAB 6: AGMARKNET TERMINAL & AUDIT LEDGER ==================== -->
+      <section id="tab-explorer" class="tab-panel">
+        <div class="grid-2-equal">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">AGMARKNET Historical Market Terminal (<span id="total-records-count">3,318</span> Records)</div>
+                <div class="card-subtitle">Verified Itarsi Soyabean daily arrivals &amp; modal prices plus MP multi-mandi benchmarks</div>
+              </div>
+            </div>
+            <div class="card-body" style="padding-bottom:10px;">
+              <div class="form-row" style="margin-bottom:0;">
+                <div>
+                  <label for="filter-market">Filter by Mandi / District</label>
+                  <input type="text" id="filter-market" placeholder="Search Itarsi, Indore, Bhopal..." oninput="renderAgmarknetTable()" />
+                </div>
+                <div>
+                  <label for="filter-crop">Filter by Commodity / Variety</label>
+                  <input type="text" id="filter-crop" placeholder="Search Soyabean, Wheat, Yellow..." oninput="renderAgmarknetTable()" />
+                </div>
+              </div>
+            </div>
+            <div class="table-container" style="max-height:440px; overflow-y:auto;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Mandi</th>
+                    <th>Commodity</th>
+                    <th>Arrivals (t)</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Modal</th>
+                  </tr>
+                </thead>
+                <tbody id="agmarknet-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Immutable SHA-256 Transaction &amp; Escrow Ledger</div>
+                <div class="card-subtitle">Append-only hash-chained audit trail of quotes, locks, dispatches &amp; settlements</div>
+              </div>
+            </div>
+            <div class="table-container" style="max-height:515px; overflow-y:auto;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Seq</th>
+                    <th>Timestamp (UTC)</th>
+                    <th>Contract</th>
+                    <th>Event</th>
+                    <th>Summary</th>
+                    <th>SHA-256</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-log-body"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
-</main>
+      </section>
+    </main>
+  </div>
+</div>
 
 <script src="static/agrimart_data.js"></script>
 <script>
@@ -918,11 +1520,24 @@
     renderAuditTable();
   }
 
-  function switchTab(tabId, btn) {
+  function setLifecycleStep(stepNum) {
+    for (let i = 1; i <= 5; i++) {
+      const el = document.getElementById(`step-${i}`);
+      if (!el) continue;
+      el.classList.remove('done', 'current');
+      if (i < stepNum) el.classList.add('done');
+      else if (i === stepNum) el.classList.add('current');
+    }
+  }
+
+  function switchTab(tabId, btn, titleText) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
     btn.classList.add('active');
+    if (titleText) {
+      document.getElementById('topbar-view-title').textContent = titleText;
+    }
     if (tabId === 'tab-forecast') {
       drawForecastChart();
     }
@@ -968,20 +1583,27 @@
       state: "QUOTE_GENERATED"
     };
 
-    document.getElementById('q-meta').innerHTML =
-      `Commodity: <strong>${commodity}</strong> &nbsp;|&nbsp; Mandi: <strong>${mandi}</strong> &nbsp;|&nbsp; Load: <strong>${loadT.toFixed(1)} t</strong> (${(loadT*10).toFixed(1)} q)`;
-    document.getElementById('q-band').textContent =
-      `₹ ${pLow.toLocaleString()} – ₹ ${pUp.toLocaleString()} per quintal`;
-    document.getElementById('q-sub').innerHTML =
-      `Point estimate: ₹ ${pPoint.toLocaleString()}/q &nbsp;|&nbsp; Test-set interval coverage: 92.4%`;
+    const pMid = Math.round((pLow + pUp) / 2);
 
-    const pMid = (pLow + pUp) / 2;
+    document.getElementById('q-meta').innerHTML =
+      `<span>Commodity: <strong>${commodity}</strong></span><span>Mandi: <strong>${mandi} APMC</strong></span><span>Lot: <strong>${loadT.toFixed(1)} t (${(loadT*10).toFixed(1)} q)</strong></span>`;
+    document.getElementById('q-band').innerHTML =
+      `₹ ${pLow.toLocaleString()} – ₹ ${pUp.toLocaleString()} <span style="font-size:14px; font-weight:500; color:var(--text-secondary);">/ quintal</span>`;
+    document.getElementById('q-sub').innerHTML =
+      `STCE Point Forecast: <strong>₹ ${pPoint.toLocaleString()}/q</strong> &nbsp;&bull;&nbsp; Band Midpoint: <strong>₹ ${pMid.toLocaleString()}/q</strong>`;
+
+    document.getElementById('gauge-low').textContent = `Floor P_L: ₹${pLow.toLocaleString()}`;
+    document.getElementById('gauge-mid').textContent = `Midpoint: ₹${pMid.toLocaleString()}`;
+    document.getElementById('gauge-up').textContent = `Ceiling P_U: ₹${pUp.toLocaleString()}`;
+
     const deposit = Math.round(pMid * loadT * 10);
     document.getElementById('escrow-tx-id').textContent = STATE.currentQuote.tx_id;
     document.getElementById('escrow-deposit-val').textContent = `₹ ${deposit.toLocaleString()}`;
     document.getElementById('escrow-band-note').textContent = `Band [₹${pLow}, ₹${pUp}]/q for ${(loadT*10).toFixed(1)} q`;
     document.getElementById('escrow-state-badge').textContent = "QUOTE_GENERATED";
     document.getElementById('escrow-state-badge').className = "badge badge-blue";
+
+    setLifecycleStep(2);
 
     document.getElementById('settle-plow').value = pLow;
     document.getElementById('settle-pup').value = pUp;
@@ -1004,8 +1626,10 @@
     badge.textContent = "ESCROW_LOCKED";
     badge.className = "badge badge-green";
 
+    setLifecycleStep(3);
+
     document.getElementById('escrow-live-message').innerHTML =
-      `<strong style="color:#1b3b2b;">&#10004; Pre-Commitment Escrow Locked!</strong> Both Farmer and Wholesaler agreed to contractual price boundaries <strong>[₹${q.p_low.toLocaleString()}, ₹${q.p_up.toLocaleString()}]/q</strong> before dispatch. Simulated escrow hold: <strong>₹${deposit.toLocaleString()}</strong>.`;
+      `<strong style="color:var(--brand);">&#10004; Pre-Commitment Escrow Locked:</strong> Contractual boundaries <strong>[₹${q.p_low.toLocaleString()}, ₹${q.p_up.toLocaleString()}]/q</strong> committed before dispatch. Escrow hold: <strong>₹${deposit.toLocaleString()}</strong>.`;
 
     appendAuditEvent(
       "ESCROW_LOCKED",
@@ -1022,7 +1646,7 @@
     badge.className = "badge badge-warn";
 
     document.getElementById('escrow-live-message').innerHTML =
-      `<strong style="color:#8c5808;">&#9888; Renegotiation Requested:</strong> Stakeholder requested review of quoted band [₹${q.p_low}, ₹${q.p_up}]/q citing local arrival pressure and transport distance.`;
+      `<strong style="color:var(--amber);">&#9888; Band Review Requested:</strong> Stakeholder requested review of quoted band [₹${q.p_low}, ₹${q.p_up}]/q citing local arrival pressure and transport distance.`;
 
     appendAuditEvent(
       "RENEGOTIATION_REQUESTED",
@@ -1050,19 +1674,19 @@
     const devPct = Math.abs(pFinal - pMid) / pMid * 100.0;
 
     document.getElementById('settle-result-panel').innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <span style="font-size:0.82rem; color:var(--muted);">Agreed Band Midpoint (P_mid): <strong>₹ ${pMid.toFixed(2)}/q</strong></span>
-        <span class="badge badge-green">Within [P_L, P_U]: TRUE (0 Violations)</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <span style="font-size:12px; color:var(--text-secondary);">Committed Midpoint (P_mid): <strong class="mono">₹ ${pMid.toFixed(2)}/q</strong></span>
+        <span class="badge badge-green">Within [P_L, P_U]: TRUE</span>
       </div>
-      <div style="font-size:1.3rem; font-weight:700; color:var(--primary); margin-bottom:8px; font-family:monospace;">
-        Final Settlement Price (P_f): ₹ ${pFinal.toFixed(2)} / quintal
+      <div class="mono" style="font-size:20px; font-weight:700; color:var(--brand); margin-bottom:6px;">
+        Final Settlement (P_f): ₹ ${pFinal.toFixed(2)} / quintal
       </div>
-      <div style="font-size:0.8rem; color:var(--text); line-height:1.6;">
-        &bull; Unclamped Rule Price (P_rule): <strong>₹ ${pRule.toFixed(2)}/q</strong> &nbsp;|&nbsp; Midpoint Deviation: <strong>${devPct.toFixed(2)}%</strong><br/>
-        &bull; Factor Offsets: Demand <strong>${offDemand >= 0 ? '+' : ''}${offDemand.toFixed(2)}</strong>,
-          Delay <strong>${offDelay.toFixed(2)}</strong>,
-          Spoilage <strong>${offSpoil.toFixed(2)}</strong>,
-          Quality Gate <strong>${offQual.toFixed(2)} ₹/q</strong>
+      <div style="font-size:12px; color:var(--text-secondary); line-height:1.6;">
+        Unclamped P_rule: <strong class="mono">₹ ${pRule.toFixed(2)}/q</strong> &nbsp;&bull;&nbsp; Midpoint Deviation: <strong class="mono">${devPct.toFixed(2)}%</strong><br/>
+        Offsets: Demand <strong class="mono">${offDemand >= 0 ? '+' : ''}${offDemand.toFixed(2)}</strong>,
+        Delay <strong class="mono">${offDelay.toFixed(2)}</strong>,
+        Spoilage <strong class="mono">${offSpoil.toFixed(2)}</strong>,
+        Quality <strong class="mono">${offQual.toFixed(2)} ₹/q</strong>
       </div>
     `;
     return { pLow, pUp, pMid, pRule, pFinal, devPct };
@@ -1077,12 +1701,15 @@
     badge.textContent = "SETTLED_AND_RELEASED";
     badge.className = "badge badge-green";
 
+    setLifecycleStep(5);
+
     appendAuditEvent(
       "QUALITY_VERIFIED_AND_SETTLED",
       "RULE_BASED_SETTLEMENT_ENGINE",
       `Final Price P_f = ₹${res.pFinal.toFixed(2)}/q (within [₹${res.pLow}, ₹${res.pUp}]); Released ₹${totalPayout.toLocaleString()}`
     );
-    alert(`Quality Verified & Escrow Released!\nFinal Rule-Based Price: ₹${res.pFinal.toFixed(2)}/q\nTotal Payout Released: ₹${totalPayout.toLocaleString()}`);
+    document.getElementById('escrow-live-message').innerHTML =
+      `<strong style="color:var(--brand);">&#10004; Escrow Released:</strong> Final Rule-Based Settlement of <strong>₹${res.pFinal.toFixed(2)}/q</strong> verified. Total payout of <strong>₹${totalPayout.toLocaleString()}</strong> released to Farmer.`;
   }
 
   function runFreshMonteCarlo() {
@@ -1101,7 +1728,7 @@
       sumDev += Math.abs(pf - pMid) / pMid * 100;
     }
     document.getElementById('mc-run-status').textContent =
-      `Verified N=2,000 live runs: Mean Dev = ${(sumDev/N).toFixed(2)}%, Band Violations = ${violations}`;
+      `Verified N=2,000 live trials: Mean Deviation = ${(sumDev/N).toFixed(2)}%, Band Violations = ${violations}`;
     appendAuditEvent("MONTE_CARLO_BENCHMARK", "SIMULATION_ENGINE", `Completed N=2,000 runs: 0 band violations`);
   }
 
@@ -1134,17 +1761,17 @@
       const isTop = idx === 0 && !d.isDeclined;
       return `
         <tr class="${isTop ? 'highlight-row' : ''}">
-          <td>#${idx + 1}</td>
-          <td><strong>${d.name}</strong><br/><span style="font-size:0.75rem; color:#94a3b8;">${d.driver_id} &bull; ${d.vehicle_type}</span></td>
-          <td>${d.punctuality_rate_pct}%</td>
-          <td>${d.dispute_free_rate_pct}%</td>
-          <td><strong>${d.adjScore}</strong></td>
+          <td class="mono">#${idx + 1}</td>
+          <td><strong>${d.name}</strong><br/><span style="font-size:11.5px; color:var(--text-muted);">${d.driver_id} &bull; ${d.vehicle_type}</span></td>
+          <td class="mono">${d.punctuality_rate_pct}%</td>
+          <td class="mono">${d.dispute_free_rate_pct}%</td>
+          <td class="mono"><strong>${d.adjScore}</strong></td>
           <td>
             ${d.isDeclined
-              ? '<span class="badge badge-red">DECLINED (Penalty Applied)</span>'
+              ? '<span class="badge badge-red">DECLINED</span>'
               : (isTop
-                  ? `<span class="badge badge-green">TOP OFFERED</span> <button class="btn-primary" style="padding:4px 8px; font-size:0.72rem; background:#dc2626; margin-left:6px;" onclick="declineDriver('${d.driver_id}')">Simulate Decline</button>`
-                  : '<span class="badge badge-blue">STANDBY PULL</span>')}
+                  ? `<span class="badge badge-green">DISPATCH OFFERED</span> <button class="btn btn-danger-outline btn-sm" style="margin-left:6px;" onclick="declineDriver('${d.driver_id}')">Decline</button>`
+                  : '<span class="badge badge-blue">STANDBY QUEUE</span>')}
           </td>
         </tr>
       `;
@@ -1167,7 +1794,6 @@
     const defP = Math.max(0, targetP - curP);
     const defK = Math.max(0, targetK - curK);
 
-    // DAP supplies 18% N and 46% P2O5; Urea supplies 46% N; MOP supplies 60% K2O
     const dapKgHa = defP / 0.46;
     const nFromDap = dapKgHa * 0.18;
     const ureaKgHa = Math.max(0, defN - nFromDap) / 0.46;
@@ -1178,13 +1804,27 @@
     else if (ph > 7.8) phNote = "Alkaline soil detected: Apply gypsum + organic farmyard manure (FYM) to improve phosphorus availability.";
 
     document.getElementById('fert-output').innerHTML = `
-      <div style="font-weight:700; color:var(--primary); margin-bottom:6px;">
-        Recommended Fertilizer Dosage for ${opt.value} (${area.toFixed(1)} ha):
+      <div style="font-weight:700; color:var(--brand); margin-bottom:8px;">
+        Recommended Commercial Dosage for ${opt.value} (${area.toFixed(1)} Hectares):
       </div>
-      <div>&bull; <strong>Urea (46% N):</strong> ${(ureaKgHa * area).toFixed(1)} kg total (${ureaKgHa.toFixed(1)} kg/ha)</div>
-      <div>&bull; <strong>DAP (18:46:0):</strong> ${(dapKgHa * area).toFixed(1)} kg total (${dapKgHa.toFixed(1)} kg/ha)</div>
-      <div>&bull; <strong>MOP (60% K):</strong> ${(mopKgHa * area).toFixed(1)} kg total (${mopKgHa.toFixed(1)} kg/ha)</div>
-      <div style="margin-top:6px; color:var(--muted); font-size:0.8rem;"><strong>pH Diagnostic (${ph}):</strong> ${phNote}</div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px;">
+        <div style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
+          <div style="font-size:11px; color:var(--text-muted);">Urea (46% N)</div>
+          <div class="mono" style="font-size:15px; font-weight:700;">${(ureaKgHa * area).toFixed(1)} kg</div>
+          <div style="font-size:11px; color:var(--text-secondary);">${ureaKgHa.toFixed(1)} kg/ha</div>
+        </div>
+        <div style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
+          <div style="font-size:11px; color:var(--text-muted);">DAP (18:46:0)</div>
+          <div class="mono" style="font-size:15px; font-weight:700;">${(dapKgHa * area).toFixed(1)} kg</div>
+          <div style="font-size:11px; color:var(--text-secondary);">${dapKgHa.toFixed(1)} kg/ha</div>
+        </div>
+        <div style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
+          <div style="font-size:11px; color:var(--text-muted);">MOP (60% K)</div>
+          <div class="mono" style="font-size:15px; font-weight:700;">${(mopKgHa * area).toFixed(1)} kg</div>
+          <div style="font-size:11px; color:var(--text-secondary);">${mopKgHa.toFixed(1)} kg/ha</div>
+        </div>
+      </div>
+      <div style="color:var(--text-secondary); font-size:12px;"><strong>Soil pH Advisory (${ph}):</strong> ${phNote}</div>
     `;
   }
 
@@ -1204,13 +1844,13 @@
     const tbody = document.getElementById('agmarknet-table-body');
     tbody.innerHTML = filtered.slice(0, 150).map(r => `
       <tr>
-        <td>${r.date}</td>
-        <td><strong>${r.market}</strong> <span style="color:var(--muted); font-size:0.75rem;">(${r.district})</span></td>
+        <td class="mono" style="font-size:12px;">${r.date}</td>
+        <td><strong>${r.market}</strong> <span style="color:var(--text-muted); font-size:11.5px;">(${r.district})</span></td>
         <td>${r.commodity} <span class="badge badge-blue">${r.variety}</span></td>
-        <td>${r.arrivals_t.toFixed(1)}</td>
-        <td>₹ ${r.min_price.toLocaleString()}</td>
-        <td>₹ ${r.max_price.toLocaleString()}</td>
-        <td><strong>₹ ${r.modal_price.toLocaleString()}</strong></td>
+        <td class="mono">${r.arrivals_t.toFixed(1)}</td>
+        <td class="mono">₹${r.min_price.toLocaleString()}</td>
+        <td class="mono">₹${r.max_price.toLocaleString()}</td>
+        <td class="mono"><strong>₹${r.modal_price.toLocaleString()}</strong></td>
       </tr>
     `).join('');
   }
@@ -1219,12 +1859,12 @@
     const tbody = document.getElementById('audit-log-body');
     tbody.innerHTML = STATE.auditLog.map(a => `
       <tr>
-        <td>#${a.seq}</td>
-        <td style="font-size:0.75rem; color:var(--muted);">${a.ts}</td>
-        <td><strong>${a.tx_id}</strong></td>
+        <td class="mono">#${a.seq}</td>
+        <td class="mono" style="font-size:11.5px; color:var(--text-muted);">${a.ts}</td>
+        <td class="mono"><strong>${a.tx_id}</strong></td>
         <td><span class="badge badge-green">${a.eventType}</span></td>
-        <td style="font-size:0.8rem;">${a.details}</td>
-        <td style="font-family:monospace; font-size:0.75rem; color:var(--primary-light);">${a.hash}</td>
+        <td style="font-size:12px;">${a.details}</td>
+        <td class="mono" style="font-size:11.5px; color:var(--brand);">${a.hash}</td>
       </tr>
     `).join('');
   }
@@ -1238,7 +1878,7 @@
     ctx.clearRect(0, 0, W, H);
 
     const series = data.test_series;
-    const padL = 60, padR = 24, padT = 24, padB = 38;
+    const padL = 62, padR = 24, padT = 20, padB = 34;
     const plotW = W - padL - padR;
     const plotH = H - padT - padB;
 
@@ -1255,11 +1895,10 @@
     const xOf = i => padL + (i / (series.length - 1)) * plotW;
     const yOf = v => padT + (1 - (v - minY) / (maxY - minY)) * plotH;
 
-    // Grid lines
-    ctx.strokeStyle = '#e5e4dc';
+    ctx.strokeStyle = '#eceee9';
     ctx.lineWidth = 1;
-    ctx.fillStyle = '#575c57';
-    ctx.font = '11px sans-serif';
+    ctx.fillStyle = '#6e7a72';
+    ctx.font = '11px Inter, sans-serif';
     for (let k = 0; k <= 5; k++) {
       const val = minY + (k / 5) * (maxY - minY);
       const y = yOf(val);
@@ -1267,10 +1906,9 @@
       ctx.moveTo(padL, y);
       ctx.lineTo(W - padR, y);
       ctx.stroke();
-      ctx.fillText(`₹${Math.round(val)}`, 8, y + 4);
+      ctx.fillText(`₹${Math.round(val)}`, 10, y + 4);
     }
 
-    // Confidence band polygon
     ctx.beginPath();
     series.forEach((p, i) => {
       const x = xOf(i), y = yOf(p.ci_up);
@@ -1281,21 +1919,19 @@
       ctx.lineTo(xOf(i), yOf(series[i].ci_low));
     }
     ctx.closePath();
-    ctx.fillStyle = 'rgba(45, 106, 79, 0.14)';
+    ctx.fillStyle = 'rgba(21, 94, 59, 0.13)';
     ctx.fill();
 
-    // Observed price line
     ctx.beginPath();
     series.forEach((p, i) => {
       const x = xOf(i), y = yOf(p.observed_price);
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     });
-    ctx.strokeStyle = '#1b3b2b';
-    ctx.lineWidth = 1.8;
+    ctx.strokeStyle = '#155e3b';
+    ctx.lineWidth = 1.9;
     ctx.stroke();
 
-    // STCE Predicted price line
     ctx.beginPath();
     series.forEach((p, i) => {
       const x = xOf(i), y = yOf(p.stce_predicted);
@@ -1308,10 +1944,9 @@
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // X-axis date ticks
     for (let i = 0; i < series.length; i += 60) {
-      ctx.fillStyle = '#575c57';
-      ctx.fillText(series[i].date.substring(0, 7), xOf(i) - 18, H - 12);
+      ctx.fillStyle = '#6e7a72';
+      ctx.fillText(series[i].date.substring(0, 7), xOf(i) - 18, H - 10);
     }
   }
 
@@ -1319,88 +1954,81 @@
     const data = window.AGRIMART_DATA;
     if (!data) return;
 
-    // 1. Populate Fig 6 SHAP bars
-    const top3 = data.shap_global_importance.slice(0, 3);
-    const maxShap = top3[0].mean_abs_shap;
-    document.getElementById('q-shap-bars').innerHTML = top3.map(item => `
-      <div class="shap-bar-row">
-        <span>${item.feature}</span>
-        <div class="shap-bar-track">
-          <div class="shap-bar-fill" style="width:${(item.mean_abs_shap / maxShap * 100).toFixed(1)}%"></div>
+    const top4 = data.shap_global_importance.slice(0, 4);
+    const maxShap = top4[0].mean_abs_shap;
+    document.getElementById('q-shap-bars').innerHTML = top4.map(item => `
+      <div class="shap-row">
+        <span class="shap-name">${item.feature}</span>
+        <div class="shap-track">
+          <div class="shap-fill" style="width:${(item.mean_abs_shap / maxShap * 100).toFixed(1)}%"></div>
         </div>
-        <span style="text-align:right; font-weight:600;">${item.mean_abs_shap.toFixed(4)}</span>
+        <span class="shap-val">${item.percentage.toFixed(1)}%</span>
       </div>
     `).join('');
 
-    // 2. Populate Global SHAP bars (Tab 2)
     const maxG = data.shap_global_importance[0].mean_abs_shap;
     document.getElementById('global-shap-container').innerHTML = data.shap_global_importance.map(item => `
-      <div class="shap-bar-row" style="color:var(--text); grid-template-columns: 195px 1fr 70px;">
-        <span>${item.feature}</span>
-        <div class="shap-bar-track">
-          <div class="shap-bar-fill" style="width:${(item.mean_abs_shap / maxG * 100).toFixed(1)}%"></div>
+      <div class="shap-row" style="grid-template-columns: 185px 1fr 64px;">
+        <span class="shap-name">${item.feature}</span>
+        <div class="shap-track">
+          <div class="shap-fill" style="width:${(item.mean_abs_shap / maxG * 100).toFixed(1)}%"></div>
         </div>
-        <span style="text-align:right; font-family:monospace;">${item.mean_abs_shap.toFixed(4)}</span>
+        <span class="shap-val">${item.mean_abs_shap.toFixed(4)}</span>
       </div>
     `).join('');
 
-    // 3. Populate Table I
     document.getElementById('table1-body').innerHTML = data.table1_forecast_comparison.map(row => `
       <tr class="${row.model.includes('STCE (proposed)') ? 'highlight-row' : ''}">
         <td>${row.model}</td>
-        <td>${row.rmse_inr_q.toFixed(2)}</td>
-        <td>${row.mae_inr_q.toFixed(2)}</td>
-        <td>${row.mape_pct.toFixed(2)}%</td>
-        <td>${row.interval_coverage_pct !== null ? row.interval_coverage_pct.toFixed(2) + '%' : 'N/A'}</td>
+        <td class="mono">${row.rmse_inr_q.toFixed(2)}</td>
+        <td class="mono">${row.mae_inr_q.toFixed(2)}</td>
+        <td class="mono">${row.mape_pct.toFixed(2)}%</td>
+        <td class="mono">${row.interval_coverage_pct !== null ? row.interval_coverage_pct.toFixed(2) + '%' : '—'}</td>
       </tr>
     `).join('');
 
-    // 4. Populate Multi-Horizon table
     document.getElementById('horizon-body').innerHTML = data.horizon_evaluation.map(row => `
       <tr>
         <td>${row.horizon}</td>
-        <td>${row.rmse_inr_q.toFixed(2)}</td>
-        <td>${row.mae_inr_q.toFixed(2)}</td>
-        <td>${row.mape_pct.toFixed(2)}%</td>
+        <td class="mono">${row.rmse_inr_q.toFixed(2)}</td>
+        <td class="mono">${row.mae_inr_q.toFixed(2)}</td>
+        <td class="mono">${row.mape_pct.toFixed(2)}%</td>
         <td><span class="badge badge-green">${row.coverage_pct.toFixed(2)}%</span></td>
       </tr>
     `).join('');
 
-    // 5. Populate Table II (Monte Carlo N=2,000)
     document.getElementById('table2-body').innerHTML = data.monte_carlo_evaluation.table2_comparison.map(row => {
       const diff = row.better === 'lower'
-        ? `${((row.baseline - row.agrimart_ai) / row.baseline * 100).toFixed(1)}% reduction`
+        ? `${((row.baseline - row.agrimart_ai) / row.baseline * 100).toFixed(1)}% lower`
         : `+${(row.agrimart_ai - row.baseline).toFixed(2)} ${row.unit}`;
       return `
         <tr>
           <td><strong>${row.metric}</strong></td>
-          <td>${row.baseline}</td>
-          <td style="color:var(--primary); font-weight:700;">${row.agrimart_ai}</td>
+          <td class="mono">${row.baseline}</td>
+          <td class="mono" style="color:var(--brand); font-weight:700;">${row.agrimart_ai}</td>
           <td><span class="badge badge-green">${diff}</span></td>
         </tr>
       `;
     }).join('');
 
-    // 6. Populate VRPTW stops & Drivers
     document.getElementById('vrptw-stops-body').innerHTML = data.vrptw_solution.route_stops.map(s => `
       <tr>
-        <td>#${s.step}</td>
+        <td class="mono">#${s.step}</td>
         <td><strong>${s.location}</strong></td>
-        <td>${s.time_window_h[0].toFixed(1)}h – ${s.time_window_h[1].toFixed(1)}h</td>
-        <td>${s.eta_hours.toFixed(2)} h</td>
-        <td>${s.cumulative_km.toFixed(1)} km</td>
+        <td class="mono">${s.time_window_h[0].toFixed(1)}h – ${s.time_window_h[1].toFixed(1)}h</td>
+        <td class="mono">${s.eta_hours.toFixed(2)} h</td>
+        <td class="mono">${s.cumulative_km.toFixed(1)} km</td>
       </tr>
     `).join('');
     renderDrivers();
 
-    // 7. Populate Crop Advisory
     document.getElementById('advisory-body').innerHTML = data.crop_advisory.map(c => `
       <tr class="${c.rank === 1 ? 'highlight-row' : ''}">
-        <td>#${c.rank}</td>
-        <td><strong>${c.crop}</strong><br/><span style="font-size:0.75rem; color:#94a3b8;">${c.season} &bull; ${c.primary_mandi}</span></td>
-        <td>₹${c.expected_price_band_inr_q[0]} – ₹${c.expected_price_band_inr_q[1]}</td>
-        <td>₹${c.cultivation_cost_inr_acre.toLocaleString()}/ac</td>
-        <td>${c.perishability_index}</td>
+        <td class="mono">#${c.rank}</td>
+        <td><strong>${c.crop}</strong><br/><span style="font-size:11.5px; color:var(--text-muted);">${c.season} &bull; ${c.primary_mandi}</span></td>
+        <td class="mono">₹${c.expected_price_band_inr_q[0]} – ₹${c.expected_price_band_inr_q[1]}</td>
+        <td class="mono">₹${c.cultivation_cost_inr_acre.toLocaleString()}/ac</td>
+        <td class="mono">${c.perishability_index}</td>
         <td><span class="badge badge-green">${c.composite_score}/100</span></td>
       </tr>
     `).join('');
@@ -1409,7 +2037,6 @@
     calculateLiveSettlement();
     renderAgmarknetTable();
 
-    // Seed initial audit trail
     appendAuditEvent("DATASET_INGESTED", "AGMARKNET_FEED", "Loaded 2,718 raw Itarsi Soyabean records -> 3,460 continuous daily series");
     appendAuditEvent("STCE_MODEL_EVALUATED", "PYTORCH_ENGINE", "Test RMSE ₹120.23/q, MAPE 2.55%, Interval Coverage 92.35%");
     appendAuditEvent("QUOTE_GENERATED", "STCE_FORECASTER", "Soyabean @ Itarsi (2.4t): Band [₹3,239, ₹3,637]/q, Point ₹3,421/q");
